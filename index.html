@@ -901,6 +901,7 @@ function floatEmoji(emoji){
 
 // ===== INFINITE LESSON ENGINE =====
 function switchMode(mode){
+  seqStopTts();
   const isWord=mode==='word';
   document.getElementById('tabWord').classList.toggle('active',isWord);
   document.getElementById('tabLesson').classList.toggle('active',!isWord);
@@ -919,8 +920,23 @@ let lPassed=0,lStreak=0,lAttempts=0;
 let currentStudyMode='speak'; // 'speak' | 'listen' | 'write'
 let seqPlaced=[],seqPoolOrder=[],seqChecked=false,seqSub='it';
 let arSeqDeck=[],arSeqIdx=0;
+let seqTtsTimer=null; // بيتخزّن فيه الـ setTimeout بتاع تشغيل النطق التلقائي في AR mode، عشان نقدر نلغيه لو الجملة اتغيّرت قبل ما يجري
+function seqStopTts(){ // يلغي أي نطق متأخر (التايمر) + أي نطق شغال دلوقتي
+  clearTimeout(seqTtsTimer);
+  seqTtsTimer=null;
+  speechSynthesis.cancel();
+}
 function seqS(){return seqSub==='ar'?arSeqDeck[arSeqIdx]:lDeck[lIdx];}
 function seqIsLast(){return seqSub==='ar'?arSeqIdx+1>=arSeqDeck.length:lIdx+1>=lDeck.length;}
+function seqAdvance(){ // كمّل للجملة الجاية في AR sub-mode (لما المستخدم يبدّل تاب أو سب-تاب)
+  // ملحوظة: IT sub-mode بيستخدم lDeck/lIdx اللي هي نفسها المستخدمة في تابات
+  // النطق والكتابة، فمينفعش نـ advance فيها هنا عشان ما نبوّظ تقدّم المستخدم
+  // في التابات التانية. الـ advance هنا خاص بـ AR deck بس (arSeqDeck/arSeqIdx).
+  if(seqSub!=='ar')return;
+  if(arSeqDeck.length===0)return; // لسه مفيش deck — seqSetup هيعمله من الصفر
+  arSeqIdx++;
+  if(arSeqIdx>=arSeqDeck.length){arSeqDeck=shuffle([...AR_SEQ_SENTENCES]);arSeqIdx=0;}
+}
 function seqWordCount(){return seqS().words.length;}
 
 // drill state — isolates and re-tests just the mispronounced word
@@ -950,11 +966,8 @@ function lRender(){
   document.getElementById('lPronoun').textContent=s.pronoun;
   document.getElementById('lAr').textContent=s.ar;
   document.getElementById('lEn').textContent=s.en;
-  // In "رتّب بالعربي" the Arabic translation IS the answer — hide both while
-  // the learner is arranging tiles. In all other modes they stay visible.
-  const hideTranslation=(currentStudyMode==='listen'&&seqSub==='ar');
-  document.getElementById('lAr').style.display=hideTranslation?'none':'';
-  document.getElementById('lEn').style.display=hideTranslation?'none':'';
+  document.getElementById('lAr').style.display='';
+  document.getElementById('lEn').style.display='';
 
   // breakdown panel (deep grammar notes, tap any word to hear it)
   const bd=document.getElementById('lBreakdown');
@@ -1032,7 +1045,11 @@ function lUpdateScore(){
   document.getElementById('lStreak').textContent=lStreak;
 }
 
-function lSpeak(){speakWord(lDeck[lIdx].it);}
+function lSpeak(){
+  const s=(currentStudyMode==='listen'&&seqSub==='ar'&&arSeqDeck[arSeqIdx])
+    ?arSeqDeck[arSeqIdx]:lDeck[lIdx];
+  speakWord(s.it);
+}
 
 function speakWord(text){
   const clean=text.replace(/^[.,!?;:"'""'']+|[.,!?;:"'""'']+$/g,'').trim();
@@ -1282,7 +1299,9 @@ ensureWhisperLoaded();
 // كده لو المستخدم بدّل موود وهو في نص جملة، التقدم في وضع النطق بيتحفظ.
 function setStudyMode(mode){
   if(micBusy)return;
+  const prevMode=currentStudyMode;
   currentStudyMode=mode;
+  seqStopTts(); // قفل أي نطق AR متأخر أو شغال من التاب اللي كنا فيه، قبل ما نبدّل
   ['speak','listen','write'].forEach(m=>{
     document.getElementById('st'+m.charAt(0).toUpperCase()+m.slice(1))
       .classList.toggle('active',m===mode);
@@ -1330,7 +1349,10 @@ function setStudyMode(mode){
       document.getElementById('lNextBtn').textContent=lIdx+1>=lDeck.length?'خلصت الدفعة 🏆':'الجملة الجاية ←';
     }
   }
-  if(isLi) seqSetup(); // seqSetup يدير الـ breakdown بنفسه
+  if(isLi){
+    if(prevMode!==mode) seqAdvance(); // بدّلنا للتاب ده من تاب تاني — كمّل للجملة الجاية، مش نفس القديمة
+    seqSetup(); // seqSetup يدير الـ breakdown بنفسه
+  }
   if(isWr){
     document.getElementById('lBreakdown').style.display='flex';
     const sc=lDeck[lIdx];
@@ -1350,12 +1372,14 @@ function seqArLabel(w){
 }
 
 function setSeqSub(sub){
+  seqStopTts(); // قفل أي نطق متأخر من السب-تاب اللي كنا فيه
+  const prevSub=seqSub;
   seqSub=sub;
   document.getElementById('seqSubIt').classList.toggle('active',sub==='it');
   document.getElementById('seqSubAr').classList.toggle('active',sub==='ar');
-  const hideTranslation=(sub==='ar');
-  document.getElementById('lAr').style.display=hideTranslation?'none':'';
-  document.getElementById('lEn').style.display=hideTranslation?'none':'';
+  document.getElementById('lAr').style.display='';
+  document.getElementById('lEn').style.display='';
+  if(sub==='ar'&&prevSub!=='ar') seqAdvance(); // داخلين على AR من تاب تاني — كمّل للجملة الجاية
   seqSetup();
 }
 
@@ -1371,16 +1395,32 @@ function seqSetup(){
   document.getElementById('seqAnswer').classList.toggle('dir-rtl',seqSub==='ar');
   document.getElementById('seqPool').classList.toggle('dir-rtl',seqSub==='ar');
 
+  // ── Sync the header translations to THIS sentence (not lDeck[lIdx]) ──
+  // AR mode: hide the Arabic (it's the answer) — show English hint only
+  // IT mode: show both Arabic + English as usual
+  const arEl=document.getElementById('lAr');
+  const enEl=document.getElementById('lEn');
+  arEl.textContent=s.ar;
+  enEl.textContent=s.en;
+  if(seqSub==='ar'){
+    arEl.style.display='none';   // الإجابة — نخبّيها
+    enEl.style.display='';       // الإنجليزي فقط كتلميح
+  } else {
+    arEl.style.display='';
+    enEl.style.display='';
+  }
+
   // AR mode: auto-play full Italian sentence (task = hear then arrange Arabic)
   // IT mode: no auto-play — individual word plays on pick
   if(seqSub==='ar'){
     const utt=new SpeechSynthesisUtterance(s.it);
     utt.lang='it-IT';utt.rate=0.75;
-    setTimeout(()=>{speechSynthesis.cancel();speechSynthesis.speak(utt);},700);
+    clearTimeout(seqTtsTimer); // امسح أي تايمر قديم متأخر، عشان ما يجيش يشغّل جملة قديمة بعد ما الجملة اتغيّرت
+    seqTtsTimer=setTimeout(()=>{speechSynthesis.cancel();speechSynthesis.speak(utt);},700);
   }
 
-  // TTS button: visible in AR mode (re-listen), hidden in IT mode (no full-sentence hint)
-  document.getElementById('lTtsBtn').style.display=seqSub==='ar'?'inline-block':'none';
+  // TTS button: visible in both modes
+  document.getElementById('lTtsBtn').style.display='inline-block';
 
   // Update zone label
   document.getElementById('seqZoneLbl').textContent=

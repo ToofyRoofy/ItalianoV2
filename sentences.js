@@ -475,21 +475,21 @@ const LESSON_SENTENCES = [
 const AR_SEQ_SENTENCES = [
 
 // ── بار / قهوة ──────────────────────────────────────────────────────
-{it:"Vado al bar ogni mattina e prendo un caffè", ar:"بروح البار كل صبح وباخد قهوة",
+{it:"Vado al bar ogni mattina e prendo un caffè", ar:"بروح البار كل صبح وباخد قهوة", en:"I go to the bar every morning and have a coffee.",
  words:[
   {it:"Vado",ar:"بروح"},{it:"al",ar:"للـ"},{it:"bar",ar:"البار"},
   {it:"ogni",ar:"كل"},{it:"mattina",ar:"صبح"},{it:"e",ar:"و"},
   {it:"prendo",ar:"باخد"},{it:"un",ar:"(تنكير)"},{it:"caffè",ar:"قهوة"}
 ]},
 
-{it:"Il barista mi prepara il caffè senza zucchero", ar:"النادل بيجهزلي القهوة من غير سكر",
+{it:"Il barista mi prepara il caffè senza zucchero", ar:"النادل بيجهزلي القهوة من غير سكر", en:"The barista makes me a coffee without sugar.",
  words:[
   {it:"Il",ar:"الـ"},{it:"barista",ar:"النادل"},{it:"mi",ar:"لي"},
   {it:"prepara",ar:"بيجهز"},{it:"il",ar:"الـ"},{it:"caffè",ar:"القهوة"},
   {it:"senza",ar:"من غير"},{it:"zucchero",ar:"سكر"}
 ]},
 
-{it:"Posso avere un bicchiere d'acqua per favore", ar:"ممكن كوباية مية لو سمحت",
+{it:"Posso avere un bicchiere d'acqua per favore", ar:"ممكن كوباية مية لو سمحت", en:"Can I have a glass of water please?",
  words:[
   {it:"Posso",ar:"ممكن"},{it:"avere",ar:"آخد"},{it:"un",ar:"(تنكير)"},
   {it:"bicchiere",ar:"كوباية"},{it:"d'acqua",ar:"مية"},{it:"per",ar:"من"},
@@ -497,20 +497,20 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── سوبر ماركت / تسوق ───────────────────────────────────────────────
-{it:"Devo andare al supermercato a comprare il pane", ar:"لازم أروح السوبر ماركت أشتري عيش",
+{it:"Devo andare al supermercato a comprare il pane", ar:"لازم أروح السوبر ماركت أشتري عيش", en:"I need to go to the supermarket to buy bread.",
  words:[
   {it:"Devo",ar:"لازم"},{it:"andare",ar:"أروح"},{it:"al",ar:"للـ"},
   {it:"supermercato",ar:"السوبر ماركت"},{it:"a",ar:"عشان"},
   {it:"comprare",ar:"أشتري"},{it:"il",ar:"الـ"},{it:"pane",ar:"العيش"}
 ]},
 
-{it:"Quanto costa questo prodotto nel negozio", ar:"بكام المنتج ده في المحل",
+{it:"Quanto costa questo prodotto nel negozio", ar:"بكام المنتج ده في المحل", en:"How much does this product cost in the shop?",
  words:[
   {it:"Quanto",ar:"بكام"},{it:"costa",ar:"بيكلف"},{it:"questo",ar:"الـ"},
   {it:"prodotto",ar:"المنتج"},{it:"nel",ar:"في الـ"},{it:"negozio",ar:"المحل"}
 ]},
 
-{it:"Ho dimenticato di comprare il latte al supermercato", ar:"نسيت أشتري اللبن من السوبر ماركت",
+{it:"Ho dimenticato di comprare il latte al supermercato", ar:"نسيت أشتري اللبن من السوبر ماركت", en:"I forgot to buy milk at the supermarket.",
  words:[
   {it:"Ho",ar:"أنا"},{it:"dimenticato",ar:"نسيت"},{it:"di",ar:"إني"},
   {it:"comprare",ar:"أشتري"},{it:"il",ar:"الـ"},{it:"latte",ar:"اللبن"},
@@ -518,7 +518,7 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── مواصلات ─────────────────────────────────────────────────────────
-{it:"Il treno per Milano parte tra dieci minuti dal binario tre", ar:"القطار لميلانو بيمشي بعد عشر دقايق من الرصيف التلاتة",
+{it:"Il treno per Milano parte tra dieci minuti dal binario tre", ar:"القطار لميلانو بيمشي بعد عشر دقايق من الرصيف التلاتة", en:"The train to Milan leaves in ten minutes from platform three.",
  words:[
   {it:"Il",ar:"الـ"},{it:"treno",ar:"القطار"},{it:"per",ar:"لـ"},
   {it:"Milano",ar:"ميلانو"},{it:"parte",ar:"بيمشي"},{it:"tra",ar:"بعد"},
@@ -526,14 +526,14 @@ const AR_SEQ_SENTENCES = [
   {it:"binario",ar:"الرصيف"},{it:"tre",ar:"التلاتة"}
 ]},
 
-{it:"Devo prendere l'autobus numero dodici per andare in centro", ar:"لازم آخد الأتوبيس رقم اتناشر عشان أروح وسط البلد",
+{it:"Devo prendere l'autobus numero dodici per andare in centro", ar:"لازم آخد الأتوبيس رقم اتناشر عشان أروح وسط البلد", en:"I need to take bus number twelve to go to the city center.",
  words:[
   {it:"Devo",ar:"لازم"},{it:"prendere",ar:"آخد"},{it:"l'autobus",ar:"الأتوبيس"},
   {it:"numero",ar:"رقم"},{it:"dodici",ar:"اتناشر"},{it:"per",ar:"عشان"},
   {it:"andare",ar:"أروح"},{it:"in",ar:"في"},{it:"centro",ar:"وسط البلد"}
 ]},
 
-{it:"Il traffico era bloccato e sono arrivato tardi al lavoro", ar:"الزحمة كانت واقفة ووصلت متأخر للشغل",
+{it:"Il traffico era bloccato e sono arrivato tardi al lavoro", ar:"الزحمة كانت واقفة ووصلت متأخر للشغل", en:"The traffic was jammed and I arrived late to work.",
  words:[
   {it:"Il",ar:"الـ"},{it:"traffico",ar:"الزحمة"},{it:"era",ar:"كانت"},
   {it:"bloccato",ar:"واقفة"},{it:"e",ar:"و"},{it:"sono",ar:"أنا"},
@@ -542,21 +542,21 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── مطعم ────────────────────────────────────────────────────────────
-{it:"Vorrei un tavolo per due persone vicino alla finestra", ar:"عايز ترابيزة لاتنين قريب من الشباك",
+{it:"Vorrei un tavolo per due persone vicino alla finestra", ar:"عايز ترابيزة لاتنين قريب من الشباك", en:"I'd like a table for two people near the window.",
  words:[
   {it:"Vorrei",ar:"عايز"},{it:"un",ar:"(تنكير)"},{it:"tavolo",ar:"ترابيزة"},
   {it:"per",ar:"لـ"},{it:"due",ar:"اتنين"},{it:"persone",ar:"شخص"},
   {it:"vicino",ar:"قريب"},{it:"alla",ar:"من الـ"},{it:"finestra",ar:"الشباك"}
 ]},
 
-{it:"Il cameriere ci porta il menu e l'acqua naturale", ar:"الجرسون جابلنا المنيو والمية الطبيعية",
+{it:"Il cameriere ci porta il menu e l'acqua naturale", ar:"الجرسون جابلنا المنيو والمية الطبيعية", en:"The waiter brings us the menu and still water.",
  words:[
   {it:"Il",ar:"الـ"},{it:"cameriere",ar:"الجرسون"},{it:"ci",ar:"لنا"},
   {it:"porta",ar:"جاب"},{it:"il",ar:"الـ"},{it:"menu",ar:"المنيو"},
   {it:"e",ar:"و"},{it:"l'acqua",ar:"المية"},{it:"naturale",ar:"الطبيعية"}
 ]},
 
-{it:"Vorrei ordinare una pizza margherita e un'insalata mista", ar:"عايز أطلب بيتزا مارغريتا وسلطة مشكلة",
+{it:"Vorrei ordinare una pizza margherita e un'insalata mista", ar:"عايز أطلب بيتزا مارغريتا وسلطة مشكلة", en:"I'd like to order a margherita pizza and a mixed salad.",
  words:[
   {it:"Vorrei",ar:"عايز"},{it:"ordinare",ar:"أطلب"},{it:"una",ar:"(تنكير)"},
   {it:"pizza",ar:"بيتزا"},{it:"margherita",ar:"مارغريتا"},{it:"e",ar:"و"},
@@ -564,7 +564,7 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── صحة / صيدلية ────────────────────────────────────────────────────
-{it:"Non mi sento bene ho mal di testa da ieri sera", ar:"مش بحس بخير عندي صداع من امبارح بالليل",
+{it:"Non mi sento bene ho mal di testa da ieri sera", ar:"مش بحس بخير عندي صداع من امبارح بالليل", en:"I don't feel well, I've had a headache since last night.",
  words:[
   {it:"Non",ar:"مش"},{it:"mi",ar:"أنا"},{it:"sento",ar:"بحس"},
   {it:"bene",ar:"بخير"},{it:"ho",ar:"عندي"},{it:"mal",ar:"ألم"},
@@ -572,7 +572,7 @@ const AR_SEQ_SENTENCES = [
   {it:"ieri",ar:"امبارح"},{it:"sera",ar:"بالليل"}
 ]},
 
-{it:"Il medico mi ha detto di prendere la medicina due volte al giorno", ar:"الدكتور قالي آخد الدوا مرتين في اليوم",
+{it:"Il medico mi ha detto di prendere la medicina due volte al giorno", ar:"الدكتور قالي آخد الدوا مرتين في اليوم", en:"The doctor told me to take the medicine twice a day.",
  words:[
   {it:"Il",ar:"الـ"},{it:"medico",ar:"الدكتور"},{it:"mi",ar:"لي"},
   {it:"ha",ar:"قال"},{it:"detto",ar:"إني"},{it:"di",ar:"إني"},
@@ -582,21 +582,21 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── شغل / مكتب ──────────────────────────────────────────────────────
-{it:"Ho una riunione importante alle dieci di mattina", ar:"عندي اجتماع مهم الساعة عشرة الصبح",
+{it:"Ho una riunione importante alle dieci di mattina", ar:"عندي اجتماع مهم الساعة عشرة الصبح", en:"I have an important meeting at ten in the morning.",
  words:[
   {it:"Ho",ar:"عندي"},{it:"una",ar:"(تنكير)"},{it:"riunione",ar:"اجتماع"},
   {it:"importante",ar:"مهم"},{it:"alle",ar:"الساعة"},{it:"dieci",ar:"عشرة"},
   {it:"di",ar:"الـ"},{it:"mattina",ar:"الصبح"}
 ]},
 
-{it:"Devo finire questo progetto entro venerdì prossimo", ar:"لازم أخلص المشروع ده قبل الجمعة الجاية",
+{it:"Devo finire questo progetto entro venerdì prossimo", ar:"لازم أخلص المشروع ده قبل الجمعة الجاية", en:"I need to finish this project by next Friday.",
  words:[
   {it:"Devo",ar:"لازم"},{it:"finire",ar:"أخلص"},{it:"questo",ar:"الـ"},
   {it:"progetto",ar:"المشروع"},{it:"entro",ar:"قبل"},{it:"venerdì",ar:"الجمعة"},
   {it:"prossimo",ar:"الجاية"}
 ]},
 
-{it:"Il mio capo mi ha mandato una email importante stamattina", ar:"مديري بعتلي إيميل مهم الصبح",
+{it:"Il mio capo mi ha mandato una email importante stamattina", ar:"مديري بعتلي إيميل مهم الصبح", en:"My boss sent me an important email this morning.",
  words:[
   {it:"Il",ar:"الـ"},{it:"mio",ar:"بتاعي"},{it:"capo",ar:"مدير"},
   {it:"mi",ar:"لي"},{it:"ha",ar:"بعت"},{it:"mandato",ar:"إيميل"},
@@ -605,14 +605,14 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── بيت / يوميات ────────────────────────────────────────────────────
-{it:"Stasera cucino la pasta con il sugo di pomodoro", ar:"الليلة بطبخ باستا بصوص الطماطم",
+{it:"Stasera cucino la pasta con il sugo di pomodoro", ar:"الليلة بطبخ باستا بصوص الطماطم", en:"Tonight I'm cooking pasta with tomato sauce.",
  words:[
   {it:"Stasera",ar:"الليلة"},{it:"cucino",ar:"بطبخ"},{it:"la",ar:"الـ"},
   {it:"pasta",ar:"الباستا"},{it:"con",ar:"بـ"},{it:"il",ar:"الـ"},
   {it:"sugo",ar:"صوص"},{it:"di",ar:"بـ"},{it:"pomodoro",ar:"طماطم"}
 ]},
 
-{it:"Devo fare la spesa e poi portare i bambini a scuola", ar:"لازم أعمل المشتريات وبعدين أوصّل الأطفال للمدرسة",
+{it:"Devo fare la spesa e poi portare i bambini a scuola", ar:"لازم أعمل المشتريات وبعدين أوصّل الأطفال للمدرسة", en:"I need to do the shopping and then take the kids to school.",
  words:[
   {it:"Devo",ar:"لازم"},{it:"fare",ar:"أعمل"},{it:"la",ar:"الـ"},
   {it:"spesa",ar:"المشتريات"},{it:"e",ar:"و"},{it:"poi",ar:"بعدين"},
@@ -620,7 +620,7 @@ const AR_SEQ_SENTENCES = [
   {it:"a",ar:"لـ"},{it:"scuola",ar:"المدرسة"}
 ]},
 
-{it:"L'affitto di questo appartamento è troppo caro per me", ar:"إيجار الشقة دي غالي أوي عليا",
+{it:"L'affitto di questo appartamento è troppo caro per me", ar:"إيجار الشقة دي غالي أوي عليا", en:"The rent for this apartment is too expensive for me.",
  words:[
   {it:"L'affitto",ar:"إيجار"},{it:"di",ar:"الـ"},{it:"questo",ar:"الـ"},
   {it:"appartamento",ar:"الشقة"},{it:"è",ar:"هو"},{it:"troppo",ar:"أوي"},
@@ -628,14 +628,14 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── جامعة / دراسة ───────────────────────────────────────────────────
-{it:"Devo studiare per l'esame di italiano della prossima settimana", ar:"لازم أذاكر لامتحان الإيطالي الأسبوع الجاي",
+{it:"Devo studiare per l'esame di italiano della prossima settimana", ar:"لازم أذاكر لامتحان الإيطالي الأسبوع الجاي", en:"I need to study for the Italian exam next week.",
  words:[
   {it:"Devo",ar:"لازم"},{it:"studiare",ar:"أذاكر"},{it:"per",ar:"لـ"},
   {it:"l'esame",ar:"امتحان"},{it:"di",ar:"الـ"},{it:"italiano",ar:"إيطالي"},
   {it:"della",ar:"الـ"},{it:"prossima",ar:"الجاي"},{it:"settimana",ar:"الأسبوع"}
 ]},
 
-{it:"La professoressa ha spiegato la grammatica in modo molto chiaro", ar:"الأستاذة شرحت القواعد بطريقة واضحة جداً",
+{it:"La professoressa ha spiegato la grammatica in modo molto chiaro", ar:"الأستاذة شرحت القواعد بطريقة واضحة جداً", en:"The professor explained the grammar in a very clear way.",
  words:[
   {it:"La",ar:"الـ"},{it:"professoressa",ar:"الأستاذة"},{it:"ha",ar:"هي"},
   {it:"spiegato",ar:"شرحت"},{it:"la",ar:"الـ"},{it:"grammatica",ar:"القواعد"},
@@ -644,7 +644,7 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── طقس ─────────────────────────────────────────────────────────────
-{it:"Oggi fa molto caldo ma domani arriva un po' di pioggia", ar:"النهارده حر جداً بس بكره هتيجي شوية مطر",
+{it:"Oggi fa molto caldo ma domani arriva un po' di pioggia", ar:"النهارده حر جداً بس بكره هتيجي شوية مطر", en:"Today it's very hot but tomorrow some rain is coming.",
  words:[
   {it:"Oggi",ar:"النهارده"},{it:"fa",ar:"في"},{it:"molto",ar:"جداً"},
   {it:"caldo",ar:"حر"},{it:"ma",ar:"بس"},{it:"domani",ar:"بكره"},
@@ -652,7 +652,7 @@ const AR_SEQ_SENTENCES = [
   {it:"di",ar:"من"},{it:"pioggia",ar:"مطر"}
 ]},
 
-{it:"Portati un ombrello perché sembra che piova oggi pomeriggio", ar:"خد معاك شمسية لأنه يبان إنه هيمطر بعد الضهر",
+{it:"Portati un ombrello perché sembra che piova oggi pomeriggio", ar:"خد معاك شمسية لأنه يبان إنه هيمطر بعد الضهر", en:"Take an umbrella because it looks like it will rain this afternoon.",
  words:[
   {it:"Portati",ar:"خد معاك"},{it:"un",ar:"(تنكير)"},{it:"ombrello",ar:"شمسية"},
   {it:"perché",ar:"لأن"},{it:"sembra",ar:"يبان"},{it:"che",ar:"إنه"},
@@ -660,7 +660,7 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── تليفون / تواصل ──────────────────────────────────────────────────
-{it:"Ti chiamo dopo cena per parlare di questa cosa importante", ar:"هتصلك بعد العشا عشان نتكلم في الموضوع المهم ده",
+{it:"Ti chiamo dopo cena per parlare di questa cosa importante", ar:"هتصلك بعد العشا عشان نتكلم في الموضوع المهم ده", en:"I'll call you after dinner to talk about this important thing.",
  words:[
   {it:"Ti",ar:"هتصلك"},{it:"chiamo",ar:"بتصل"},{it:"dopo",ar:"بعد"},
   {it:"cena",ar:"العشا"},{it:"per",ar:"عشان"},{it:"parlare",ar:"نتكلم"},
@@ -668,7 +668,7 @@ const AR_SEQ_SENTENCES = [
   {it:"importante",ar:"المهم"}
 ]},
 
-{it:"Ho ricevuto un messaggio da Marco ma non ho ancora risposto", ar:"استلمت رسالة من ماركو بس ما رديتش لسه",
+{it:"Ho ricevuto un messaggio da Marco ma non ho ancora risposto", ar:"استلمت رسالة من ماركو بس ما رديتش لسه", en:"I received a message from Marco but haven't replied yet.",
  words:[
   {it:"Ho",ar:"أنا"},{it:"ricevuto",ar:"استلمت"},{it:"un",ar:"(تنكير)"},
   {it:"messaggio",ar:"رسالة"},{it:"da",ar:"من"},{it:"Marco",ar:"ماركو"},
@@ -677,14 +677,14 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── ترفيه / أوقات فراغ ──────────────────────────────────────────────
-{it:"Questo fine settimana andiamo al cinema con gli amici", ar:"الويك إند ده هنروح السينما مع الأصحاب",
+{it:"Questo fine settimana andiamo al cinema con gli amici", ar:"الويك إند ده هنروح السينما مع الأصحاب", en:"This weekend we're going to the cinema with friends.",
  words:[
   {it:"Questo",ar:"الـ"},{it:"fine",ar:"نهاية"},{it:"settimana",ar:"الأسبوع"},
   {it:"andiamo",ar:"هنروح"},{it:"al",ar:"للـ"},{it:"cinema",ar:"السينما"},
   {it:"con",ar:"مع"},{it:"gli",ar:"الـ"},{it:"amici",ar:"الأصحاب"}
 ]},
 
-{it:"Mi piace molto ascoltare la musica mentre cucino la sera", ar:"بحب أوي أسمع موسيقى وأنا بطبخ بالليل",
+{it:"Mi piace molto ascoltare la musica mentre cucino la sera", ar:"بحب أوي أسمع موسيقى وأنا بطبخ بالليل", en:"I really like listening to music while I cook in the evening.",
  words:[
   {it:"Mi",ar:"أنا"},{it:"piace",ar:"بحب"},{it:"molto",ar:"أوي"},
   {it:"ascoltare",ar:"أسمع"},{it:"la",ar:"الـ"},{it:"musica",ar:"موسيقى"},
