@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parla Italiano 🇮🇹</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+
+  :root {
+    --bg:#0b0b11; --card:#13131c; --border:#252535;
+    --green:#00e896; --red:#ff4d6d; --gold:#f5c518;
+    --blue:#5b9cf6; --text:#f0f0fa; --muted:#6b6b8a;
+    --purple:#c084fc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Tajawal',system-ui,sans-serif;
+    min-height:100vh;display:flex;align-items:center;
+    justify-content:center;padding:24px 16px;
+  }
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:linear-gradient(#ffffff03 1px,transparent 1px),
+      linear-gradient(90deg,#ffffff03 1px,transparent 1px);
+    background-size:44px 44px;pointer-events:none;
+  }
+  .wrap{position:relative;width:100%;max-width:460px;display:flex;flex-direction:column;gap:15px;}
+
+  /* header */
+  .logo{font-size:2.2rem;font-weight:900;letter-spacing:3px;color:var(--gold);
+    direction:ltr;font-family:Georgia,serif;text-align:center;}
+  .tagline{color:var(--muted);font-size:.84rem;text-align:center;margin-top:2px;}
+
+  /* scores */
+  .scores{display:flex;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+  .sc{flex:1;text-align:center;padding:13px 0;border-left:1px solid var(--border);}
+  .sc:last-child{border-left:none;}
+  .sc-num{font-size:1.8rem;font-weight:900;line-height:1;}
+  .sc-lbl{font-size:.7rem;color:var(--muted);margin-top:3px;}
+  .sc.g .sc-num{color:var(--gold);} .sc.r .sc-num{color:var(--green);} .sc.b .sc-num{color:var(--blue);}
+
+  /* mode tabs */
+  .mode-tabs{display:flex;gap:8px;}
+  .mode-tab{
+    flex:1;padding:11px 6px;border-radius:12px;border:1px solid var(--border);
+    background:var(--card);color:var(--muted);font-family:inherit;font-size:.82rem;
+    font-weight:700;cursor:pointer;transition:.2s;
+  }
+  .mode-tab.active{background:linear-gradient(135deg,var(--gold),#d4a90a);color:#000;border-color:transparent;}
+  .mode-tab:hover:not(.active){color:var(--text);border-color:var(--muted);}
+
+  /* lesson breakdown */
+  .card-it.sentence{font-size:1.55rem;line-height:1.35;}
+  .card-en{font-size:.85rem;color:var(--muted);direction:ltr;font-style:italic;margin-bottom:6px;}
+  .breakdown{
+    display:flex;flex-direction:column;gap:9px;
+    background:#0e0e1a;border:1px solid var(--border);
+    border-radius:12px;padding:14px 16px;margin:10px 0;text-align:right;
+  }
+  .bd-row{display:flex;gap:10px;align-items:baseline;}
+  .bd-word{font-family:Georgia,serif;color:var(--gold);direction:ltr;font-weight:700;
+    min-width:84px;text-align:left;flex-shrink:0;}
+  .bd-note{color:var(--text);font-size:.83rem;line-height:1.5;}
+  .conj-table{margin-top:10px;background:#0e0e1a;border:1px solid var(--border);border-radius:12px;padding:10px 14px;}
+  .conj-title{font-size:.72rem;color:var(--muted);margin-bottom:6px;text-align:center;}
+  .conj-tbl{width:100%;border-collapse:collapse;font-size:.85rem;}
+  .conj-tbl td{padding:4px 8px;border-bottom:1px solid var(--border);}
+  .conj-tbl td:first-child{color:var(--blue);text-align:right;}
+  .conj-tbl td:last-child{color:var(--green);direction:ltr;text-align:left;font-family:Georgia,serif;}
+
+  .free-next-btn{
+    align-self:center;background:none;border:1px solid var(--border);color:var(--muted);
+    font-family:inherit;font-size:.78rem;padding:6px 14px;border-radius:20px;cursor:pointer;transition:.2s;
+  }
+  .free-next-btn:hover{color:var(--gold);border-color:var(--gold);}
+
+  .word-tap{cursor:pointer;border-bottom:1px dashed transparent;border-radius:3px;padding:0 1px;transition:.15s;}
+  .word-tap:hover,.word-tap:active{border-bottom-color:var(--gold);color:var(--gold);background:#ffffff08;}
+  .bd-word.word-tap{cursor:pointer;}
+
+  /* token row (live per-word feedback) */
+  .tokens-wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;direction:ltr;margin:4px 0 14px;}
+  .token{
+    font-family:Georgia,serif;font-size:1.05rem;padding:6px 12px;cursor:pointer;
+    border-radius:10px;border:1px solid var(--border);
+    background:#0e0e1a;color:var(--muted);transition:all .3s;
+  }
+  .token.pending{color:var(--text);}
+  .token.ok    {color:var(--green);border-color:#00e89650;background:#00e8960d;}
+  .token.bad   {color:var(--red);  border-color:#ff4d6d50;background:#ff4d6d0d;animation:shake .3s ease;}
+  .token.drill {color:var(--gold); border-color:#f5c51850;background:#f5c5180d;font-weight:700;}
+  .token.skipped{color:var(--muted);border-color:var(--border);text-decoration:line-through;opacity:.5;}
+  .token.auto{color:var(--text);border-color:var(--border);}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+  /* drill sub-mode overlay */
+  .drill-box{
+    background:#0e0e1a;border:1px solid var(--gold);
+    border-radius:14px;padding:16px 18px;margin-top:4px;
+    display:none;text-align:center;
+  }
+  .drill-box.show{display:block;}
+  .drill-label{font-size:.72rem;color:var(--muted);letter-spacing:1.5px;margin-bottom:6px;}
+  .drill-word{font-family:Georgia,serif;font-size:2rem;color:var(--gold);direction:ltr;margin-bottom:4px;}
+  .drill-ar{font-size:.92rem;color:var(--text);margin-bottom:6px;}
+  .drill-note{font-size:.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;}
+  .drill-attempts{font-size:.72rem;color:var(--muted);}
+
+  .engine-status{
+    display:none;text-align:center;font-size:.74rem;color:var(--muted);
+    background:#0e0e1a;border:1px solid var(--border);border-radius:10px;
+    padding:6px 10px;direction:rtl;
+  }
+
+  /* progress */
+  .prog-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--blue));border-radius:2px;transition:width .5s ease;}
+
+  /* card */
+  .card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:20px;padding:28px 22px;text-align:center;
+    transition:border-color .35s,background .35s;
+  }
+  .card.ok {border-color:#00e89660;background:#00e8960a;}
+  .card.mid{border-color:#f5c51860;background:#f5c5180a;}
+  .card.bad{border-color:#ff4d6d60;background:#ff4d6d0a;}
+
+  .card-cat{font-size:.66rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .card-it{font-family:Georgia,serif;font-size:2.8rem;color:var(--text);direction:ltr;line-height:1.1;margin-bottom:8px;}
+  .card-ar{font-size:1.2rem;color:var(--gold);margin-bottom:14px;}
+
+  /* pronunciation box */
+  .pron-box{
+    display:flex;flex-direction:column;gap:7px;
+    background:#0e0e1a;border:1px solid var(--border);
+    border-radius:12px;padding:12px 16px;margin-bottom:4px;
+  }
+  .pron-row{display:flex;align-items:center;gap:10px;direction:ltr;}
+  .pron-tag{
+    font-size:.62rem;letter-spacing:1px;text-transform:uppercase;
+    color:var(--muted);min-width:34px;text-align:right;
+    flex-shrink:0;
+  }
+  .pron-ipa{
+    font-family:'Courier New',monospace;font-size:1.05rem;
+    color:var(--purple);letter-spacing:.5px;
+  }
+  .pron-ar-row{display:flex;align-items:center;gap:10px;direction:rtl;}
+  .pron-ar-val{
+    font-size:1rem;color:var(--blue);
+    letter-spacing:.5px;direction:rtl;
+  }
+
+  /* stress legend */
+  .stress-note{
+    font-size:.7rem;color:var(--muted);direction:ltr;
+    text-align:center;margin-top:4px;
+  }
+  .stress-note b{color:var(--purple);}
+
+  .card-ex{font-size:.8rem;color:var(--muted);direction:ltr;font-style:italic;margin-top:10px;min-height:18px;}
+
+  /* mic area */
+  .mic-area{display:flex;flex-direction:column;align-items:center;gap:11px;}
+  .tts-btn{
+    background:none;border:1px solid var(--border);color:var(--muted);
+    border-radius:8px;padding:6px 16px;cursor:pointer;font-size:.8rem;font-family:inherit;
+    transition:color .2s,border-color .2s;
+  }
+  .tts-btn:hover{color:var(--gold);border-color:var(--gold);}
+  .mic-btn{
+    width:84px;height:84px;border-radius:50%;
+    border:2px solid var(--border);
+    background:linear-gradient(145deg,#1c1c28,#26263a);
+    color:var(--text);font-size:1.9rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .12s,border-color .3s,box-shadow .3s;
+  }
+  .mic-btn:hover:not(:disabled){transform:scale(1.06);}
+  .mic-btn:active:not(:disabled){transform:scale(.96);}
+  .mic-btn:disabled{opacity:.35;cursor:default;}
+  .mic-btn.on{
+    border-color:var(--red);
+    animation:pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 4px #ff4d6d33,0 0 0 10px #ff4d6d0a;}
+    50%     {box-shadow:0 0 0 10px #ff4d6d1a,0 0 0 20px #ff4d6d05;}
+  }
+  .mic-lbl{font-size:.8rem;color:var(--muted);transition:color .2s;}
+  .mic-lbl.on{color:var(--red);}
+
+  /* heard */
+  .heard{text-align:center;font-size:.78rem;color:var(--muted);direction:ltr;min-height:18px;}
+
+  /* badge */
+  .badge{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    border-radius:12px;padding:10px 18px;font-weight:700;font-size:.93rem;
+    opacity:0;transform:translateY(8px);
+    transition:opacity .3s,transform .3s;pointer-events:none;
+  }
+  .badge.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+  .badge.ok {background:#00e89612;border:1px solid #00e89640;color:var(--green);}
+  .badge.mid{background:#f5c51812;border:1px solid #f5c51840;color:var(--gold);}
+  .badge.bad{background:#ff4d6d12;border:1px solid #ff4d6d40;color:var(--red);}
+
+  .skip-link{
+    background:none;border:none;color:var(--muted);
+    font-family:inherit;font-size:.78rem;text-decoration:underline;
+    cursor:pointer;padding:4px;display:none;align-self:center;
+  }
+  .skip-link:hover{color:var(--text);}
+
+  .next-btn{
+    width:100%;padding:13px;border-radius:14px;border:none;
+    background:linear-gradient(135deg,var(--blue),#3a72d8);
+    color:#fff;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+    opacity:0;transform:translateY(6px);
+    transition:opacity .3s,transform .3s;pointer-events:none;
+  }
+  .next-btn.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+  .next-btn:hover{filter:brightness(1.1);}
+
+  /* end */
+  #endScreen{display:none;flex-direction:column;align-items:center;gap:20px;text-align:center;}
+  #endScreen.show{display:flex;}
+  .end-emoji{font-size:5rem;}
+  .end-title{font-size:1.5rem;font-weight:900;color:var(--gold);}
+  .end-sub{color:var(--muted);font-size:.93rem;line-height:1.9;}
+  .restart-btn{
+    padding:13px 42px;border-radius:14px;border:none;
+    background:linear-gradient(135deg,var(--green),#00b870);
+    color:#000;font-family:inherit;font-size:1rem;font-weight:900;cursor:pointer;
+    transition:transform .15s;
+  }
+  .restart-btn:hover{transform:scale(1.04);}
+
+  /* ── Study sub-mode tabs ── */
+  .study-tabs{display:flex;gap:6px;}
+  .study-tab{
+    flex:1;padding:8px 4px;border-radius:10px;border:1px solid var(--border);
+    background:var(--card);color:var(--muted);font-family:inherit;font-size:.74rem;
+    font-weight:700;cursor:pointer;transition:.2s;
+  }
+  .study-tab.active{color:var(--blue);border-color:#5b9cf660;background:#5b9cf60d;}
+  .study-tab:hover:not(.active){color:var(--text);border-color:var(--muted);}
+
+  /* Sequencing mode — drag-free word-order task */
+  .seq-answer{
+    min-height:50px;display:flex;flex-wrap:wrap;gap:6px;
+    justify-content:center;align-items:center;
+    padding:10px 8px;border:1.5px dashed #5b9cf630;
+    border-radius:12px;background:#0a0a14;margin-bottom:6px;
+    transition:border-color .25s;direction:ltr;
+  }
+  .seq-answer.has-tiles{border-color:#5b9cf650;}
+  .seq-pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:4px 0 6px;direction:ltr;}
+  .seq-answer.dir-rtl,.seq-pool.dir-rtl{direction:rtl;}
+  .seq-tile{
+    font-family:Georgia,serif;font-size:1rem;padding:7px 13px;
+    border-radius:10px;border:1px solid var(--border);
+    background:#0e0e1a;color:var(--text);cursor:pointer;
+    user-select:none;direction:ltr;transition:all .2s;
+  }
+  .seq-tile:hover:not(.ok):not(.bad){border-color:var(--blue);color:var(--blue);}
+  .seq-tile.placed{color:var(--blue);border-color:#5b9cf640;background:#5b9cf60d;}
+  .seq-tile.ok {color:var(--green);border-color:#00e89650;background:#00e8960d;cursor:default;}
+  .seq-tile.bad{color:var(--red);  border-color:#ff4d6d50;background:#ff4d6d0d;cursor:default;animation:shake .3s ease;}
+  .seq-zone-lbl{font-size:.64rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;text-align:center;margin-bottom:6px;}
+  .seq-empty-hint{font-size:.78rem;color:#6b6b8a40;font-style:italic;pointer-events:none;direction:rtl;}
+  .seq-tile.ar{direction:rtl;font-family:'Tajawal',system-ui,sans-serif;font-size:.92rem;letter-spacing:0;}
+  .seq-sub-tabs{display:flex;gap:6px;margin-bottom:8px;}
+  .seq-sub-tab{
+    flex:1;padding:7px 4px;border-radius:9px;border:1px solid var(--border);
+    background:var(--card);color:var(--muted);font-family:inherit;font-size:.76rem;
+    font-weight:700;cursor:pointer;transition:.2s;
+  }
+  .seq-sub-tab.active{color:var(--blue);border-color:#5b9cf660;background:#5b9cf60d;}
+  .seq-sub-tab:hover:not(.active){color:var(--text);border-color:var(--muted);}
+
+  /* Writing mode */
+  #writePanel{flex-direction:column;gap:10px;}
+  .write-input{
+    width:100%;padding:12px 16px;border-radius:12px;
+    border:1px solid var(--border);background:#0e0e1a;
+    color:var(--text);font-family:'Courier New',monospace;font-size:1rem;
+    direction:ltr;resize:none;outline:none;transition:border-color .2s;
+  }
+  .write-input:focus{border-color:var(--blue);}
+  .write-check-btn{
+    width:100%;padding:12px;border-radius:12px;border:none;
+    background:linear-gradient(135deg,var(--purple),#9333ea);
+    color:#fff;font-family:inherit;font-size:.93rem;font-weight:700;
+    cursor:pointer;transition:filter .2s;
+  }
+  .write-check-btn:hover{filter:brightness(1.1);}
+  .write-check-btn:disabled{opacity:.4;cursor:default;}
+  .write-result{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;direction:ltr;margin:4px 0;}
+  .wr-tok{
+    font-family:Georgia,serif;font-size:.92rem;padding:5px 10px;
+    border-radius:8px;border:1px solid var(--border);background:#0e0e1a;
+  }
+  .wr-tok.ok{color:var(--green);border-color:#00e89650;background:#00e8960d;}
+  .wr-tok.bad{color:var(--red);border-color:#ff4d6d50;background:#ff4d6d0d;}
+  .wr-tok .correct-form{display:block;font-size:.66rem;color:var(--muted);margin-top:2px;}
+  /* حروف الجر والمقالات في write mode — دايماً صح تلقائياً زي speak mode */
+  .wr-tok.auto{color:var(--muted);border-color:var(--border);border-style:dashed;opacity:.6;}
+  .write-score{text-align:center;font-size:.88rem;font-weight:700;min-height:20px;}
+
+  /* floater */
+  .floater{
+    position:fixed;font-size:3rem;pointer-events:none;z-index:999;
+    left:50%;top:42%;transform:translateX(-50%);
+    animation:floatUp .9s ease forwards;
+  }
+  @keyframes floatUp{
+    0%  {opacity:1;transform:translateX(-50%) translateY(0) scale(1);}
+    100%{opacity:0;transform:translateX(-50%) translateY(-130px) scale(1.6);}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div>
+    <div class="logo">🇮🇹 Parla!</div>
+    <div class="tagline">تدريب النطق + الدرس الإنفينيتي</div>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" id="tabWord" onclick="switchMode('word')">🎙️ نطق الكلمات</button>
+    <button class="mode-tab" id="tabLesson" onclick="switchMode('lesson')">📖 الدرس الإنفينيتي</button>
+  </div>
+
+  <div class="engine-status" id="engineStatus"></div>
+
+  <div class="wrap" id="game" style="padding:0">
+  <div class="scores">
+    <div class="sc g"><div class="sc-num" id="sAvg">0%</div><div class="sc-lbl">📊 متوسط النطق</div></div>
+    <div class="sc b"><div class="sc-num" id="sAll">0</div><div class="sc-lbl">🔤 محاولات</div></div>
+    <div class="sc r"><div class="sc-num" id="sBest">0%</div><div class="sc-lbl">🏆 أعلى سكور</div></div>
+  </div>
+
+  <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+
+  <div class="card" id="card">
+    <div class="card-cat" id="cat"></div>
+    <div class="card-it"  id="wIt"></div>
+    <div class="card-ar"  id="wAr"></div>
+
+    <!-- Pronunciation guide -->
+    <div class="pron-box">
+      <div class="pron-row">
+        <span class="pron-tag">IPA</span>
+        <span class="pron-ipa" id="wIpa"></span>
+      </div>
+      <div class="pron-ar-row">
+        <span class="pron-tag" style="direction:ltr">نطق</span>
+        <span class="pron-ar-val" id="wPron"></span>
+      </div>
+    </div>
+    <div class="stress-note">ˈ = الضغط على المقطع التالي · aː = مد طويل · tʃ = تش · dʒ = ج</div>
+
+    <div class="card-ex" id="wEx"></div>
+  </div>
+
+  <div class="mic-area">
+    <button class="tts-btn" onclick="speak()">🔊 اسمع النطق الصح</button>
+    <button class="mic-btn" id="micBtn" onclick="toggleMic()">🎙️</button>
+    <div class="mic-lbl" id="micLbl">اضغط وتكلم</div>
+  </div>
+
+  <div class="heard" id="heard"></div>
+  <div class="badge" id="badge"></div>
+  <button class="skip-link" id="skipBtn" onclick="skipWord()">تخطي الكلمة دي ←</button>
+  <button class="next-btn" id="nextBtn" onclick="next()">التالي ←</button>
+  </div>
+
+  <div class="wrap" id="endScreen" style="padding:0">
+    <div class="end-emoji" id="endEmoji"></div>
+    <div class="end-title" id="endTitle"></div>
+    <div class="end-sub"  id="endSub"></div>
+    <button class="restart-btn" onclick="restart()">🔄 العب تاني</button>
+  </div>
+
+  <!-- LESSON MODE: infinite-style sentence breakdown + pronunciation + word-drill -->
+  <div class="wrap" id="lessonMode" style="display:none;padding:0">
+    <div class="scores">
+      <div class="sc g"><div class="sc-num" id="lAvg">0%</div><div class="sc-lbl">📊 جمل صح</div></div>
+      <div class="sc b"><div class="sc-num" id="lAll">0/0</div><div class="sc-lbl">📖 الجملة</div></div>
+      <div class="sc r"><div class="sc-num" id="lStreak">0</div><div class="sc-lbl">🔥 streak</div></div>
+    </div>
+
+    <div class="prog-track"><div class="prog-fill" id="lProgFill" style="width:0%"></div></div>
+    <div class="study-tabs">
+      <button class="study-tab active" id="stSpeak" onclick="setStudyMode('speak')">🎙️ نطق</button>
+      <button class="study-tab" id="stListen" onclick="setStudyMode('listen')">🔀 ترتيب</button>
+      <button class="study-tab" id="stWrite" onclick="setStudyMode('write')">✍️ كتابة</button>
+    </div>
+    <button class="free-next-btn" onclick="lNext()">⏭️ جملة تانية</button>
+
+    <div class="card" id="lCard">
+      <div class="card-cat" id="lPronoun"></div>
+      <div class="card-ar" id="lAr" style="margin-bottom:4px;"></div>
+      <div class="card-en" id="lEn"></div>
+
+      <div class="tokens-wrap" id="lTokens"></div>
+
+      <!-- Sequence (word-order) mode panel — IT: arrange Italian tiles; AR: hear Italian, arrange Arabic -->
+      <div id="listenPanel" style="display:none">
+        <div class="seq-sub-tabs">
+          <button class="seq-sub-tab active" id="seqSubIt" onclick="setSeqSub('it')">🇮🇹 رتّب بالإيطالي</button>
+          <button class="seq-sub-tab"        id="seqSubAr" onclick="setSeqSub('ar')">🇸🇦 رتّب بالعربي</button>
+        </div>
+        <div class="seq-zone-lbl" id="seqZoneLbl">رتّب بالإيطالي 🔀</div>
+        <div class="seq-answer" id="seqAnswer">
+          <span class="seq-empty-hint">اضغط على الكلمات بالترتيب الصح</span>
+        </div>
+        <div class="seq-zone-lbl">الكلمات</div>
+        <div class="seq-pool" id="seqPool"></div>
+        <button class="free-next-btn" onclick="seqReveal()" id="seqRevealBtn" style="display:block;margin:6px auto 0">👁️ كشف الترتيب</button>
+      </div>
+
+      <!-- Write mode panel -->
+      <div id="writePanel" style="display:none">
+        <textarea class="write-input" id="writeInput" rows="2" placeholder="اكتب الجملة بالإيطالي هنا..."></textarea>
+        <button class="write-check-btn" id="writeCheckBtn" onclick="checkWrite()">✅ تحقق من الإجابة</button>
+        <div class="write-result" id="writeResult"></div>
+        <div class="write-score" id="writeScore"></div>
+      </div>
+
+      <!-- isolated single-word drill -->
+      <div class="drill-box" id="drillBox">
+        <div class="drill-label">تدريب كلمة واحدة</div>
+        <div class="drill-word" id="drillWord"></div>
+        <div class="drill-ar"   id="drillAr"></div>
+        <div class="drill-note" id="drillNote"></div>
+        <div class="drill-attempts" id="drillAttempts"></div>
+      </div>
+
+      <div class="breakdown" id="lBreakdown"></div>
+
+      <div class="conj-table" id="lConjWrap" style="display:none">
+        <div class="conj-title" id="lConjTitle"></div>
+        <table class="conj-tbl" id="lConjTbl"></table>
+      </div>
+    </div>
+
+    <div class="mic-area" id="lMicArea">
+      <button class="tts-btn" id="lTtsBtn" onclick="lSpeak()">🔊 اسمع الجملة</button>
+      <button class="mic-btn" id="lMicBtn" onclick="lToggleMic()">🎙️</button>
+      <div class="mic-lbl" id="lMicLbl">اضغط وقول الجملة كلها</div>
+    </div>
+
+    <div class="heard" id="lHeard"></div>
+    <div class="badge" id="lBadge"></div>
+    <button class="skip-link" id="lSkipBtn" onclick="lSkipSentence()">تخطي الجملة دي ←</button>
+    <button class="next-btn" id="lNextBtn" onclick="lNext()">الجملة الجاية ←</button>
+    <button class="restart-btn" id="lRestartBtn" onclick="lStart()" style="display:none">🔄 ابدأ الدفعة من الأول</button>
+  </div>
+</div>
+
+<script src="sentences.js"></script>
+<script>
+
+let deck=[],idx=0,answered=false;
+let totalScore=0,passedCount=0,bestScore=0,totalAttempts=0,failCount=0;
+const PASS=80;
+
+function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+function norm(s){
+  return s.toLowerCase()
+    .replace(/[àá]/g,'a').replace(/[èéê]/g,'e')
+    .replace(/[ìí]/g,'i').replace(/[òó]/g,'o')
+    .replace(/[ùú]/g,'u').replace(/[^a-z\s]/g,'').trim();
+}
+
+// Words that the sentence-level pronunciation drill (lesson mode) doesn't
+// require the learner to say correctly on their own: simple + combined
+// prepositions (حروف الجر) and indefinite articles (أدوات التنكير). They're
+// still shown in the sentence and still spoken by the TTS, but they never
+// turn 'bad' and never trigger the isolated word-drill — only real content
+// words (verbs, nouns, adjectives, pronouns, definite articles, etc.) do.
+const AUTO_SKIP_WORDS=new Set([
+  // حروف الجر البسيطة
+  'a','di','da','in','con','su','per','tra','fra',
+  // حروف الجر المدمجة (a/da/di/in/su + الأداة)
+  'al','allo','alla','ai','agli','alle',
+  'dal','dallo','dalla','dai','dagli','dalle',
+  'del','dello','della','dei','degli','delle',
+  'nel','nello','nella','nei','negli','nelle',
+  'sul','sullo','sulla','sui','sugli','sulle',
+  'col','coi',
+  // أدوات التنكير
+  'un','uno','una'
+]);
+function isAutoSkipWord(it){
+  return AUTO_SKIP_WORDS.has(norm(it));
+}
+
+// Levenshtein edit distance — used to approximate "how close" the heard
+// word is to the target word's spelling/sound, as a stand-in for real
+// phoneme-level accent scoring (which needs a server-side model).
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  if(m===0)return n;
+  if(n===0)return m;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+function similarity(a,b){
+  const dist=levenshtein(a,b);
+  const maxLen=Math.max(a.length,b.length);
+  return maxLen===0?1:1-dist/maxLen;
+}
+
+// ===== UNIFIED MIC ENGINE =====
+// Primary: Whisper-tiny running fully in-browser via WebAssembly (transformers.js) —
+// free, no API key, works fully offline once the model is downloaded+cached once.
+// Fallback: native browser SpeechRecognition (needs internet, but instant/no
+// download) — used automatically while the offline model is still loading,
+// or if WASM/the model fails for any reason, so the app never gets fully stuck.
+let micBusy=false;
+let whisperPipeline=null, whisperReady=false, whisperLoading=false;
+
+function setEngineStatus(text){
+  const el=document.getElementById('engineStatus');
+  if(!el)return;
+  if(text){el.textContent=text;el.style.display='block';}
+  else{el.style.display='none';}
+}
+
+async function ensureWhisperLoaded(){
+  if(whisperReady||whisperLoading)return;
+  whisperLoading=true;
+  setEngineStatus('⏳ بيحمّل محرك النطق الأوفلاين أول مرة (~40-75 ميجا، مرة واحدة بس)...');
+  try{
+    const mod=await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+    mod.env.allowLocalModels=false;
+    whisperPipeline=await mod.pipeline('automatic-speech-recognition','Xenova/whisper-tiny',{
+      progress_callback:(p)=>{
+        if(p&&p.status==='progress'&&typeof p.progress==='number'){
+          setEngineStatus('⏳ بيحمّل المحرك الأوفلاين... '+Math.round(p.progress)+'%');
+        }
+      }
+    });
+    whisperReady=true;
+    setEngineStatus('✅ المحرك الأوفلاين جاهز — هيشتغل من غير نت دلوقتي');
+    setTimeout(()=>setEngineStatus(''),2500);
+  }catch(err){
+    setEngineStatus('⚠️ تعذّر تحميل المحرك الأوفلاين، هنستخدم تعرف الصوت اللي محتاج نت لحد ما يتاح');
+    setTimeout(()=>setEngineStatus(''),3500);
+  }
+  whisperLoading=false;
+}
+
+// Records mic audio with simple volume-based silence detection so the user
+// doesn't have to manually mark "done speaking".
+async function recordAudioVAD(maxMs,silenceMs){
+  maxMs=maxMs||6000;silenceMs=silenceMs||900;
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  const AC=window.AudioContext||window.webkitAudioContext;
+  const liveCtx=new AC();
+  const source=liveCtx.createMediaStreamSource(stream);
+  const analyser=liveCtx.createAnalyser();
+  analyser.fftSize=2048;
+  source.connect(analyser);
+
+  let mimeType='';
+  ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'].some(t=>{
+    if(window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t)){mimeType=t;return true;}
+    return false;
+  });
+  const recorder=mimeType?new MediaRecorder(stream,{mimeType}):new MediaRecorder(stream);
+  const chunks=[];
+  recorder.ondataavailable=(e)=>{if(e.data&&e.data.size>0)chunks.push(e.data);};
+
+  return new Promise((resolve,reject)=>{
+    let speechStarted=false,silenceStart=null;
+    const dataArr=new Uint8Array(analyser.frequencyBinCount);
+    const startTime=Date.now();
+    let stopped=false;
+
+    function finishUp(){
+      stream.getTracks().forEach(t=>t.stop());
+      try{liveCtx.close();}catch(e){}
+    }
+
+    function tick(){
+      if(stopped)return;
+      analyser.getByteTimeDomainData(dataArr);
+      let sum=0;
+      for(let i=0;i<dataArr.length;i++){const v=(dataArr[i]-128)/128;sum+=v*v;}
+      const rms=Math.sqrt(sum/dataArr.length);
+      const now=Date.now();
+      if(rms>0.02){speechStarted=true;silenceStart=null;}
+      else if(speechStarted){if(silenceStart===null)silenceStart=now;}
+      const timedOut=now-startTime>maxMs;
+      const wentQuiet=speechStarted&&silenceStart&&(now-silenceStart>silenceMs);
+      if(timedOut||wentQuiet){
+        stopped=true;
+        recorder.stop();
+        return;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    recorder.onstop=async ()=>{
+      finishUp();
+      try{
+        const blob=new Blob(chunks,{type:mimeType||'audio/webm'});
+        const arrayBuf=await blob.arrayBuffer();
+        const decodeCtx=new AC();
+        const audioBuffer=await decodeCtx.decodeAudioData(arrayBuf);
+        const targetLen=Math.max(1,Math.ceil(audioBuffer.duration*16000));
+        const offline=new OfflineAudioContext(1,targetLen,16000);
+        const src=offline.createBufferSource();
+        src.buffer=audioBuffer;
+        src.connect(offline.destination);
+        src.start();
+        const rendered=await offline.startRendering();
+        resolve(rendered.getChannelData(0));
+      }catch(err){reject(err);}
+    };
+
+    recorder.start();
+    requestAnimationFrame(tick);
+  });
+}
+
+async function whisperTranscribe(float32Audio){
+  const out=await whisperPipeline(float32Audio,{language:'italian',task:'transcribe'});
+  return (out&&out.text?out.text:'').trim();
+}
+
+// Generic mic driver shared by word-mode, lesson sentence-mode, and drill
+// mode. Tries the offline Whisper engine first (if ready); otherwise falls
+// back to the native browser API (needs internet) so the mic always does
+// *something* useful.
+async function smartListen({micBtnId,micLblId,errEl,onResult,onError}){
+  if(micBusy)return;
+  const btn=document.getElementById(micBtnId);
+  const lbl=document.getElementById(micLblId);
+  micBusy=true;
+  btn.classList.add('on');
+  lbl.classList.add('on');
+  lbl.textContent='🔴 بيسمعك...';
+
+  if(!whisperReady&&!whisperLoading)ensureWhisperLoaded();
+
+  let finished=false;
+  let watchdog=null;
+  function finish(){
+    if(finished)return;
+    finished=true;
+    if(watchdog)clearTimeout(watchdog);
+    micBusy=false;
+    btn.classList.remove('on');
+    lbl.classList.remove('on');
+  }
+  // Safety net: whatever happens (a stalled WASM call, a recognition session
+  // that ends without firing onresult/onerror, etc.) the mic must never stay
+  // stuck forever — force a reset + error after 20s no matter what.
+  watchdog=setTimeout(()=>{
+    if(finished)return;
+    finish();
+    onError('timeout');
+  },20000);
+
+  if(whisperReady){
+    try{
+      const audio=await recordAudioVAD();
+      if(finished)return;
+      lbl.textContent='🧠 بيحلل النطق...';
+      const text=await whisperTranscribe(audio);
+      if(finished)return;
+      finish();
+      if(!text){onError('no-speech');return;}
+      onResult([text]);
+    }catch(err){
+      if(finished)return;
+      finish();
+      const msg=(err&&err.name==='NotAllowedError')?'not-allowed':(err.message||'mic-error');
+      onError(msg);
+    }
+    return;
+  }
+
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){finish();onError('no-engine');return;}
+  let recog;
+  try{
+    recog=new SR();
+  }catch(err){
+    finish();onError('mic-error');return;
+  }
+  recog.lang='it-IT';recog.interimResults=false;recog.maxAlternatives=6;
+  recog.onresult=(e)=>{
+    const alts=[...e.results[0]].map(r=>r.transcript.trim());
+    const conf=e.results[0][0].confidence;
+    finish();
+    onResult(alts,conf);
+  };
+  recog.onerror=(e)=>{
+    finish();
+    onError(e.error);
+  };
+  // Critical: without onend, a session that ends silently (no onresult, no
+  // onerror — seen on some Android Chrome builds) leaves micBusy stuck
+  // forever and every future tap silently does nothing.
+  recog.onend=()=>{
+    if(finished)return;
+    finish();
+    onError('no-speech');
+  };
+  try{
+    recog.start();
+  }catch(err){
+    finish();
+    onError('mic-error');
+  }
+}
+
+function micErrorMessage(err){
+  const m={
+    'not-allowed':'⛔ مفيش إذن ميكروفون',
+    'no-speech':'ما سمعتش حاجة، جرب تاني',
+    'network':'خطأ في الشبكة',
+    'no-engine':'⚠️ المتصفح ده مش بيدعم تعرف الصوت — جرب Chrome',
+    'timeout':'⌛ ماحصلش رد، جرب تاني'
+  };
+  return m[err]||'خطأ: '+err;
+}
+
+function start(){
+  deck=shuffle(WORDS);idx=0;answered=false;
+  totalScore=0;passedCount=0;bestScore=0;totalAttempts=0;failCount=0;
+  document.getElementById('endScreen').classList.remove('show');
+  document.getElementById('game').style.display='flex';
+  render();
+}
+function restart(){start();}
+
+function render(){
+  answered=false;
+  failCount=0;
+  const w=deck[idx];
+  document.getElementById('cat').textContent=w.cat;
+  document.getElementById('wIt').textContent=w.it;
+  document.getElementById('wAr').textContent=w.ar;
+  document.getElementById('wIpa').textContent=w.ipa;
+  document.getElementById('wPron').textContent=w.pron;
+  document.getElementById('wEx').textContent='';
+  document.getElementById('heard').textContent='';
+  document.getElementById('badge').className='badge';
+  document.getElementById('nextBtn').className='next-btn';
+  document.getElementById('skipBtn').style.display='none';
+  document.getElementById('card').className='card';
+  document.getElementById('micBtn').className='mic-btn';
+  document.getElementById('micBtn').disabled=false;
+  document.getElementById('micLbl').className='mic-lbl';
+  document.getElementById('micLbl').textContent='اضغط وتكلم';
+  document.getElementById('progFill').style.width=(idx/deck.length*100)+'%';
+  document.getElementById('sAvg').textContent=(passedCount?Math.round(totalScore/passedCount):0)+'%';
+  document.getElementById('sAll').textContent=totalAttempts;
+  document.getElementById('sBest').textContent=bestScore+'%';
+}
+
+function speak(){
+  const utt=new SpeechSynthesisUtterance(deck[idx].it);
+  utt.lang='it-IT';utt.rate=0.8;
+  speechSynthesis.cancel();speechSynthesis.speak(utt);
+}
+
+function toggleMic(){
+  if(answered||micBusy)return;
+  smartListen({
+    micBtnId:'micBtn',micLblId:'micLbl',
+    onResult:(alts,conf)=>{
+      document.getElementById('micLbl').textContent='اضغط وتكلم';
+      judge(alts,conf);
+    },
+    onError:(err)=>{
+      document.getElementById('micLbl').textContent='اضغط وتكلم';
+      document.getElementById('heard').textContent=micErrorMessage(err);
+    }
+  });
+}
+
+function judge(alts,conf){
+  if(answered)return;
+  answered=true;
+  totalAttempts++;
+  const w=deck[idx];
+  const target=norm(w.it);
+  const heard=alts[0];
+
+  // Approximate accuracy score: best text-similarity among the recognizer's
+  // alternatives, blended lightly with its confidence value. This is NOT a
+  // real phoneme-level accent analysis (that needs server-side ML) — it's a
+  // free, on-device proxy based on how close the transcribed word is to the
+  // target spelling.
+  let bestSim=0;
+  alts.forEach(a=>{
+    const sim=similarity(norm(a),target);
+    if(sim>bestSim)bestSim=sim;
+  });
+  const confVal=(typeof conf==='number'&&conf>0)?conf:0.85;
+  let score=Math.round((bestSim*0.85+confVal*0.15)*100);
+  score=Math.max(0,Math.min(100,score));
+  if(score>bestScore)bestScore=score;
+
+  document.getElementById('heard').textContent='🎧 سمعت: "'+heard+'"';
+  document.getElementById('wEx').textContent=w.ex;
+
+  const badge=document.getElementById('badge');
+  const card=document.getElementById('card');
+  const nb=document.getElementById('nextBtn');
+  const skipBtn=document.getElementById('skipBtn');
+
+  if(score>=PASS){
+    // Passed — word is done, move on is allowed.
+    totalScore+=score;passedCount++;
+    badge.innerHTML='🌟 <b>'+score+'%</b> — تمام! عديت الكلمة ✅';
+    badge.className='badge ok show';
+    card.className='card ok';
+    floatEmoji('🌟');
+    document.getElementById('micBtn').disabled=true;
+    skipBtn.style.display='none';
+    nb.className='next-btn show';
+    nb.textContent=idx+1>=deck.length?'النتيجة 🏆':'التالي ←';
+  } else {
+    // Below 80% — must retry this same word, mic stays active.
+    failCount++;
+    if(failCount>=3){
+      // 3 wrong tries in a row — move on automatically instead of leaving
+      // the learner stuck retrying the same word.
+      badge.innerHTML='⏭️ خلصت 3 محاولات — يلا نكمل على الكلمة الجاية';
+      badge.className='badge bad show';
+      card.className='card bad';
+      floatEmoji('⏭️');
+      document.getElementById('micBtn').disabled=true;
+      skipBtn.style.display='none';
+      setTimeout(next,1200);
+    } else {
+      answered=false;
+      let cls,emoji,msg;
+      if(score>=55){cls='mid';emoji='💪';msg='قريب! حاول تاني عشان تعدي 80%';}
+      else{cls='bad';emoji='🔁';msg='بعيد عن النطق الصح — اسمع وحاول تاني';}
+      badge.innerHTML=emoji+' <b>'+score+'%</b> — '+msg;
+      badge.className='badge '+cls+' show';
+      card.className='card '+cls;
+      floatEmoji(emoji);
+      setTimeout(()=>speak(),450);
+    }
+  }
+
+  document.getElementById('sAvg').textContent=(passedCount?Math.round(totalScore/passedCount):0)+'%';
+  document.getElementById('sAll').textContent=totalAttempts;
+  document.getElementById('sBest').textContent=bestScore+'%';
+}
+
+function skipWord(){
+  document.getElementById('skipBtn').style.display='none';
+  next();
+}
+
+function next(){
+  idx++;
+  if(idx>=deck.length){endGame();return;}
+  render();
+}
+
+function endGame(){
+  document.getElementById('game').style.display='none';
+  const avg=passedCount?Math.round(totalScore/passedCount):0;
+  const d=avg>=85?{e:'🏆',t:'محترف إيطالي!'}:avg>=65?{e:'🌟',t:'برافو عليك!'}:avg>=45?{e:'💪',t:'كويس، بس تقدر أحسن!'}:{e:'😅',t:'حاول تاني!'};
+  document.getElementById('endEmoji').textContent=d.e;
+  document.getElementById('endTitle').textContent=d.t;
+  document.getElementById('endSub').innerHTML=`متوسط دقة النطق: <b style="color:var(--gold)">${avg}%</b><br>أعلى سكور: <b style="color:var(--green)">${bestScore}%</b> &nbsp;|&nbsp; ${totalAttempts} محاولة لـ ${passedCount} كلمة`;
+  document.getElementById('endScreen').classList.add('show');
+}
+
+function floatEmoji(emoji){
+  const el=document.createElement('div');
+  el.className='floater';el.textContent=emoji;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+
+// ===== INFINITE LESSON ENGINE =====
+function switchMode(mode){
+  const isWord=mode==='word';
+  document.getElementById('tabWord').classList.toggle('active',isWord);
+  document.getElementById('tabLesson').classList.toggle('active',!isWord);
+  document.getElementById('game').style.display=isWord?'flex':'none';
+  if(!isWord)document.getElementById('endScreen').classList.remove('show');
+  document.getElementById('lessonMode').style.display=isWord?'none':'flex';
+  if(!isWord && lDeck.length===0)lStart();
+}
+
+// ===== INFINITE LESSON ENGINE =====
+// Merges: (1) live per-word matching + isolated drill-on-failure from the
+// reference build, with (2) our deep grammar breakdown + conjugation tables
+// + tap-any-word-to-hear-it + always-available free navigation.
+let lDeck=[],lIdx=0;
+let lPassed=0,lStreak=0,lAttempts=0;
+let currentStudyMode='speak'; // 'speak' | 'listen' | 'write'
+let seqPlaced=[],seqPoolOrder=[],seqChecked=false,seqSub='it';
+let arSeqDeck=[],arSeqIdx=0;
+function seqS(){return seqSub==='ar'?arSeqDeck[arSeqIdx]:lDeck[lIdx];}
+function seqIsLast(){return seqSub==='ar'?arSeqIdx+1>=arSeqDeck.length:lIdx+1>=lDeck.length;}
+function seqWordCount(){return seqS().words.length;}
+
+// drill state — isolates and re-tests just the mispronounced word
+let drillMode=false;
+let drillTokenIdx=null;
+let drillFails=0;
+
+// whole-sentence mic state
+let tokenStates=[];           // 'pending'|'ok'|'bad'|'drill'|'skipped'|'auto', one per word
+                               // ('auto' = preposition/indefinite article, never graded)
+let sentenceAnswered=false;
+let sentenceFails=0;
+
+function lStart(){
+  lDeck=shuffle(LESSON_SENTENCES);lIdx=0;
+  lPassed=0;lStreak=0;lAttempts=0;
+  document.getElementById('lRestartBtn').style.display='none';
+  lRender();
+}
+function restartLesson(){lStart();}
+
+function lRender(){
+  drillMode=false;sentenceAnswered=false;sentenceFails=0;
+  const s=lDeck[lIdx];
+  tokenStates=s.words.map(w=>isAutoSkipWord(w.it)?'auto':'pending');
+
+  document.getElementById('lPronoun').textContent=s.pronoun;
+  document.getElementById('lAr').textContent=s.ar;
+  document.getElementById('lEn').textContent=s.en;
+  // In "رتّب بالعربي" the Arabic translation IS the answer — hide both while
+  // the learner is arranging tiles. In all other modes they stay visible.
+  const hideTranslation=(currentStudyMode==='listen'&&seqSub==='ar');
+  document.getElementById('lAr').style.display=hideTranslation?'none':'';
+  document.getElementById('lEn').style.display=hideTranslation?'none':'';
+
+  // breakdown panel (deep grammar notes, tap any word to hear it)
+  const bd=document.getElementById('lBreakdown');
+  bd.innerHTML='';
+  s.words.forEach(w=>{
+    const row=document.createElement('div');
+    row.className='bd-row';
+    const wordSpan=document.createElement('span');
+    wordSpan.className='bd-word word-tap';
+    wordSpan.textContent=w.it;
+    wordSpan.onclick=()=>speakWord(w.it);
+    const noteSpan=document.createElement('span');
+    noteSpan.className='bd-note';
+    noteSpan.textContent=w.note?(w.ar+' — '+w.note):w.ar;
+    row.appendChild(wordSpan);
+    row.appendChild(noteSpan);
+    bd.appendChild(row);
+  });
+
+  const conjWrap=document.getElementById('lConjWrap');
+  if(s.conj){
+    conjWrap.style.display='block';
+    document.getElementById('lConjTitle').textContent='تصريف '+s.conj.verb+' في الـ Imperfetto (فعل شاذ)';
+    document.getElementById('lConjTbl').innerHTML=s.conj.rows.map(r=>'<tr><td>'+r.person+'</td><td>'+r.form+'</td></tr>').join('');
+  } else {
+    conjWrap.style.display='none';
+  }
+
+  document.getElementById('lHeard').textContent='';
+  document.getElementById('lBadge').className='badge';
+  document.getElementById('lNextBtn').className='next-btn';
+  document.getElementById('lSkipBtn').style.display='none';
+  document.getElementById('lCard').className='card';
+  document.getElementById('drillBox').classList.remove('show');
+  document.getElementById('lMicBtn').className='mic-btn';
+  document.getElementById('lMicBtn').disabled=false;
+  document.getElementById('lMicBtn').onclick=lToggleMic;
+  document.getElementById('lMicLbl').className='mic-lbl';
+  document.getElementById('lMicLbl').textContent='اضغط وقول الجملة كلها';
+  document.getElementById('lTtsBtn').style.display='inline-block';
+  document.getElementById('lProgFill').style.width=(lIdx/lDeck.length*100)+'%';
+  lUpdateScore();
+  lRenderTokens();
+
+  // Show the correct panel for current study mode
+  const isSp=currentStudyMode==='speak';
+  const isLi=currentStudyMode==='listen';
+  const isWr=currentStudyMode==='write';
+  document.getElementById('lTokens').style.display=isSp?'flex':'none';
+  document.getElementById('listenPanel').style.display=isLi?'block':'none';
+  document.getElementById('writePanel').style.display=isWr?'flex':'none';
+  document.getElementById('lMicBtn').style.display=isSp?'flex':'none';
+  document.getElementById('lMicLbl').style.display=isSp?'block':'none';
+  if(isLi)seqSetup();
+  if(isWr)writeSetup();
+}
+
+function lRenderTokens(){
+  const s=lDeck[lIdx];
+  const wrap=document.getElementById('lTokens');
+  wrap.innerHTML='';
+  s.words.forEach((w,i)=>{
+    const span=document.createElement('span');
+    span.className='token '+tokenStates[i];
+    span.textContent=w.it;
+    span.title=tokenStates[i]==='auto'?w.ar+' (مش لازم تتنطق لوحدها)':w.ar;
+    span.onclick=()=>speakWord(w.it);
+    wrap.appendChild(span);
+  });
+}
+
+function lUpdateScore(){
+  document.getElementById('lAvg').textContent=lAttempts?Math.round(lPassed/lAttempts*100)+'%':'0%';
+  document.getElementById('lAll').textContent=(lIdx+1)+'/'+lDeck.length;
+  document.getElementById('lStreak').textContent=lStreak;
+}
+
+function lSpeak(){speakWord(lDeck[lIdx].it);}
+
+function speakWord(text){
+  const clean=text.replace(/^[.,!?;:"'""'']+|[.,!?;:"'""'']+$/g,'').trim();
+  if(!clean)return;
+  speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(clean);
+  utt.lang='it-IT';utt.rate=0.75;
+  speechSynthesis.speak(utt);
+}
+
+// ── Sentence-level mic (first pass at the whole sentence) ──
+function lToggleMic(){
+  if(sentenceAnswered||micBusy||drillMode)return;
+  smartListen({
+    micBtnId:'lMicBtn',micLblId:'lMicLbl',
+    onResult:(alts)=>{
+      document.getElementById('lMicLbl').textContent='اضغط وقول الجملة كلها';
+      lJudgeSentence(alts);
+    },
+    onError:(err)=>{
+      document.getElementById('lMicLbl').textContent='اضغط وقول الجملة كلها';
+      document.getElementById('lHeard').textContent=micErrorMessage(err);
+    }
+  });
+}
+
+// Tokenizes what was heard and best-fit matches it word-by-word against the
+// target sentence, marking each word ok/bad individually (instead of one
+// score for the whole sentence).
+function lJudgeSentence(alts){
+  lAttempts++;
+  sentenceFails++;
+  const s=lDeck[lIdx];
+  const heard=alts[0];
+  document.getElementById('lHeard').textContent='🎧 سمعت: "'+heard+'"';
+
+  const heardTokens=norm(heard).split(/\s+/).filter(Boolean);
+  const used=new Array(heardTokens.length).fill(false);
+  const matched=[];
+  s.words.forEach(w=>{
+    const target=norm(w.it);
+    let best=-1,bestScore=0;
+    heardTokens.forEach((ht,hi)=>{
+      if(used[hi])return;
+      const sc=similarity(norm(ht),target);
+      if(sc>bestScore){bestScore=sc;best=hi;}
+    });
+    matched.push({score:bestScore,heardIdx:best});
+    if(best>=0)used[best]=true;
+  });
+
+  const THRESH=0.72;
+  let allOk=true;
+  const badIdxs=[];
+  s.words.forEach((w,i)=>{
+    if(tokenStates[i]==='ok'||tokenStates[i]==='skipped'||tokenStates[i]==='auto')return;
+    if(matched[i].score>=THRESH){tokenStates[i]='ok';}
+    else{tokenStates[i]='bad';badIdxs.push(i);allOk=false;}
+  });
+  lRenderTokens();
+
+  if(allOk){
+    // flip auto tokens to ok so the whole sentence row turns green
+    tokenStates=tokenStates.map(st=>st==='auto'?'ok':st);
+    lPassed++;lStreak++;
+    sentenceAnswered=true;
+    document.getElementById('lBadge').innerHTML='🌟 ممتاز! الجملة صح كلها ✅';
+    document.getElementById('lBadge').className='badge ok show';
+    document.getElementById('lCard').className='card ok';
+    floatEmoji('🌟');
+    document.getElementById('lMicBtn').disabled=true;
+    document.getElementById('lSkipBtn').style.display='none';
+    document.getElementById('lNextBtn').className='next-btn show';
+    document.getElementById('lNextBtn').textContent=lIdx+1>=lDeck.length?'خلصت الدفعة 🏆':'الجملة الجاية ←';
+  } else {
+    lStreak=0;
+    document.getElementById('lBadge').innerHTML='⚠️ في كلمات غلط — هنتدرب عليهم';
+    document.getElementById('lBadge').className='badge mid show';
+    if(sentenceFails>=3)document.getElementById('lSkipBtn').style.display='inline-block';
+    startDrill(badIdxs[0]);
+  }
+  lUpdateScore();
+}
+
+// ── Drill mode: isolate one mispronounced word and retest just that word ──
+function startDrill(tokenIdx){
+  drillMode=true;
+  drillTokenIdx=tokenIdx;
+  drillFails=0;
+  const s=lDeck[lIdx];
+  const w=s.words[tokenIdx];
+  tokenStates[tokenIdx]='drill';
+  lRenderTokens();
+
+  document.getElementById('drillWord').textContent=w.it;
+  document.getElementById('drillAr').textContent=w.ar;
+  document.getElementById('drillNote').textContent=w.note||'';
+  document.getElementById('drillAttempts').textContent='قول الكلمة دي لوحدها';
+  document.getElementById('drillBox').classList.add('show');
+  document.getElementById('lTtsBtn').style.display='none';
+
+  document.getElementById('lMicBtn').className='mic-btn';
+  document.getElementById('lMicBtn').disabled=false;
+  document.getElementById('lMicBtn').onclick=drillToggleMic;
+  document.getElementById('lMicLbl').textContent='اضغط وقول الكلمة';
+
+  setTimeout(()=>speakWord(w.it),300);
+}
+
+function drillToggleMic(){
+  if(micBusy)return;
+  smartListen({
+    micBtnId:'lMicBtn',micLblId:'lMicLbl',
+    onResult:(alts)=>{
+      document.getElementById('lMicLbl').textContent='اضغط وقول الكلمة';
+      drillJudge(alts);
+    },
+    onError:(err)=>{
+      document.getElementById('lMicLbl').textContent='اضغط وقول الكلمة';
+      document.getElementById('lHeard').textContent=micErrorMessage(err);
+    }
+  });
+}
+
+function drillJudge(alts){
+  const s=lDeck[lIdx];
+  const w=s.words[drillTokenIdx];
+  const target=norm(w.it);
+  let bestSim=0;
+  alts.forEach(a=>{const sc=similarity(norm(a),target);if(sc>bestSim)bestSim=sc;});
+  const heard=alts[0];
+  document.getElementById('lHeard').textContent='🎧 سمعت: "'+heard+'"';
+
+  if(bestSim>=0.72){
+    tokenStates[drillTokenIdx]='ok';
+    lRenderTokens();
+    floatEmoji('✅');
+    document.getElementById('drillAttempts').textContent='✅ كويس!';
+    finishDrillWord();
+  } else {
+    drillFails++;
+    if(drillFails>=3){
+      // 3 wrong tries on this one word in a row — skip it automatically
+      // instead of trapping the learner in an endless retry loop.
+      tokenStates[drillTokenIdx]='skipped';
+      lRenderTokens();
+      floatEmoji('⏭️');
+      document.getElementById('drillAttempts').textContent='⏭️ تخطينا الكلمة دي، يلا نكمل';
+      finishDrillWord();
+    } else {
+      floatEmoji('🔁');
+      document.getElementById('drillAttempts').textContent='حاولة '+(drillFails+1)+' — حاول تاني';
+      setTimeout(()=>speakWord(w.it),300);
+    }
+  }
+}
+
+// Shared "leave the drill box" step for both a correct attempt and an
+// auto-skip after 3 fails — moves on to the next bad word, or wraps up the
+// sentence if that was the last one.
+function finishDrillWord(){
+  setTimeout(()=>{
+    document.getElementById('lTtsBtn').style.display='inline-block';
+    document.getElementById('lMicBtn').onclick=lToggleMic;
+    document.getElementById('lMicLbl').textContent='اضغط وقول الجملة كلها';
+    document.getElementById('drillBox').classList.remove('show');
+    drillMode=false;
+
+    const nextBad=tokenStates.findIndex(st=>st==='bad');
+    if(nextBad>=0){
+      startDrill(nextBad);
+    } else {
+      sentenceAnswered=true;
+      tokenStates=tokenStates.map(st=>st==='auto'?'ok':st);
+      const hadSkips=tokenStates.includes('skipped');
+      if(!hadSkips){lPassed++;lStreak++;}
+      else{lPassed+=0.5;lStreak=0;}
+      document.getElementById('lBadge').innerHTML=hadSkips?'👍 خلصنا الجملة — كملنا بعض الكلمات تاني وقت':'🌟 ممتاز! عديت الجملة كلها ✅';
+      document.getElementById('lBadge').className='badge ok show';
+      document.getElementById('lCard').className='card ok';
+      document.getElementById('lMicBtn').disabled=true;
+      document.getElementById('lSkipBtn').style.display='none';
+      document.getElementById('lNextBtn').className='next-btn show';
+      document.getElementById('lNextBtn').textContent=lIdx+1>=lDeck.length?'خلصت الدفعة 🏆':'الجملة الجاية ←';
+      floatEmoji(hadSkips?'👍':'🏆');
+      lUpdateScore();
+    }
+  },700);
+}
+
+function lSkipSentence(){
+  tokenStates=tokenStates.map(st=>st==='ok'?'ok':'skipped');
+  lRenderTokens();
+  if(drillMode){
+    drillMode=false;
+    document.getElementById('drillBox').classList.remove('show');
+    document.getElementById('lMicBtn').onclick=lToggleMic;
+    document.getElementById('lTtsBtn').style.display='inline-block';
+  }
+  lStreak=0;
+  sentenceAnswered=true;
+  document.getElementById('lMicBtn').disabled=true;
+  document.getElementById('lSkipBtn').style.display='none';
+  document.getElementById('lNextBtn').className='next-btn show';
+  document.getElementById('lNextBtn').textContent=lIdx+1>=lDeck.length?'خلصت الدفعة 🏆':'الجملة الجاية ←';
+}
+
+function lNext(){
+  if(currentStudyMode==='listen'&&seqSub==='ar'){
+    arSeqIdx++;
+    if(arSeqIdx>=arSeqDeck.length){
+      arSeqDeck=shuffle([...AR_SEQ_SENTENCES]);arSeqIdx=0;
+      document.getElementById('lBadge').innerHTML='🏆 عدّيت كل الجمل! هنرجّع نبدأ من الأول.';
+      document.getElementById('lBadge').className='badge ok show';
+      setTimeout(()=>seqSetup(),1400);
+    } else { seqSetup(); }
+    return;
+  }
+  lIdx++;
+  if(lIdx>=lDeck.length){lEnd();return;}
+  lRender();
+}
+
+function lEnd(){
+  document.getElementById('lMicBtn').disabled=true;
+  document.getElementById('lNextBtn').className='next-btn';
+  document.getElementById('lSkipBtn').style.display='none';
+  const pct=lAttempts?Math.round(lPassed/lAttempts*100):0;
+  document.getElementById('lBadge').innerHTML='🏆 خلصت كل الـ '+lDeck.length+' جملة! نسبة النجاح: <b>'+pct+'%</b>';
+  document.getElementById('lBadge').className='badge ok show';
+  document.getElementById('lRestartBtn').style.display='inline-block';
+  floatEmoji('🏆');
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
+start();
+// Start loading the offline speech engine in the background right away, so
+// it's hopefully ready by the time the user presses the mic. If it's not
+// ready yet, the mic falls back to the online engine automatically.
+ensureWhisperLoaded();
+
+// ── Study mode switcher ──
+// بيبدّل البانيل بس من غير ما يعيد تحميل الجملة أو يمسح tokenStates —
+// كده لو المستخدم بدّل موود وهو في نص جملة، التقدم في وضع النطق بيتحفظ.
+function setStudyMode(mode){
+  if(micBusy)return;
+  currentStudyMode=mode;
+  ['speak','listen','write'].forEach(m=>{
+    document.getElementById('st'+m.charAt(0).toUpperCase()+m.slice(1))
+      .classList.toggle('active',m===mode);
+  });
+
+  // إيقاف الـ drill بنظافة لو كان شغّال
+  if(drillMode){
+    drillMode=false;
+    document.getElementById('drillBox').classList.remove('show');
+    document.getElementById('lMicBtn').onclick=lToggleMic;
+    document.getElementById('lTtsBtn').style.display='inline-block';
+    document.getElementById('lMicLbl').textContent='اضغط وقول الجملة كلها';
+  }
+
+  const isSp=mode==='speak', isLi=mode==='listen', isWr=mode==='write';
+
+  // ── إظهار / إخفاء البانيلات ──
+  document.getElementById('lTokens').style.display=isSp?'flex':'none';
+  document.getElementById('listenPanel').style.display=isLi?'block':'none';
+  document.getElementById('writePanel').style.display=isWr?'flex':'none';
+  document.getElementById('lMicBtn').style.display=isSp?'flex':'none';
+  document.getElementById('lMicLbl').style.display=isSp?'block':'none';
+
+  // ── مسح الـ UI المشترك ──
+  document.getElementById('lHeard').textContent='';
+  document.getElementById('lBadge').className='badge';
+  document.getElementById('lSkipBtn').style.display='none';
+  document.getElementById('lCard').className='card';
+  document.getElementById('lNextBtn').className='next-btn';
+
+  if(isSp){
+    // رجوع لوضع النطق — حافظ على tokenStates وsentenceAnswered كما هم
+    document.getElementById('lTtsBtn').style.display='inline-block';
+    document.getElementById('lMicBtn').onclick=lToggleMic;
+    document.getElementById('lMicBtn').disabled=sentenceAnswered;
+    document.getElementById('lMicBtn').className='mic-btn';
+    document.getElementById('lMicLbl').className='mic-lbl';
+    document.getElementById('lMicLbl').textContent='اضغط وقول الجملة كلها';
+    document.getElementById('lBreakdown').style.display='flex';
+    const sc=lDeck[lIdx];
+    if(sc.conj)document.getElementById('lConjWrap').style.display='block';
+    lRenderTokens();
+    if(sentenceAnswered){
+      document.getElementById('lNextBtn').className='next-btn show';
+      document.getElementById('lNextBtn').textContent=lIdx+1>=lDeck.length?'خلصت الدفعة 🏆':'الجملة الجاية ←';
+    }
+  }
+  if(isLi) seqSetup(); // seqSetup يدير الـ breakdown بنفسه
+  if(isWr){
+    document.getElementById('lBreakdown').style.display='flex';
+    const sc=lDeck[lIdx];
+    if(sc.conj)document.getElementById('lConjWrap').style.display='block';
+    writeSetup();
+  }
+}
+
+// ── SEQUENCE MODE ──
+// IT sub-mode: shuffled Italian tiles; word audio plays on each pick (no full-sentence auto-play).
+// AR sub-mode: full sentence auto-plays in Italian; user arranges Arabic-labelled tiles.
+// Tiles where ar is a grammar description (starts with '(') keep the Italian word as their label.
+
+function seqArLabel(w){
+  // If Arabic translation is a grammar placeholder, show Italian word instead
+  return (!w.ar||w.ar.startsWith('('))?w.it:w.ar;
+}
+
+function setSeqSub(sub){
+  seqSub=sub;
+  document.getElementById('seqSubIt').classList.toggle('active',sub==='it');
+  document.getElementById('seqSubAr').classList.toggle('active',sub==='ar');
+  const hideTranslation=(sub==='ar');
+  document.getElementById('lAr').style.display=hideTranslation?'none':'';
+  document.getElementById('lEn').style.display=hideTranslation?'none':'';
+  seqSetup();
+}
+
+function seqSetup(){
+  if(seqSub==='ar'&&arSeqDeck.length===0){arSeqDeck=shuffle([...AR_SEQ_SENTENCES]);arSeqIdx=0;}
+  const s=seqS();
+  seqChecked=false;
+  seqPlaced=[];
+  seqPoolOrder=shuffle(s.words.map((_,i)=>i));
+
+  // Tile containers flow LTR for Italian tiles (correct reading order while
+  // building an Italian sentence) and RTL for Arabic tiles.
+  document.getElementById('seqAnswer').classList.toggle('dir-rtl',seqSub==='ar');
+  document.getElementById('seqPool').classList.toggle('dir-rtl',seqSub==='ar');
+
+  // AR mode: auto-play full Italian sentence (task = hear then arrange Arabic)
+  // IT mode: no auto-play — individual word plays on pick
+  if(seqSub==='ar'){
+    const utt=new SpeechSynthesisUtterance(s.it);
+    utt.lang='it-IT';utt.rate=0.75;
+    setTimeout(()=>{speechSynthesis.cancel();speechSynthesis.speak(utt);},700);
+  }
+
+  // TTS button: visible in AR mode (re-listen), hidden in IT mode (no full-sentence hint)
+  document.getElementById('lTtsBtn').style.display=seqSub==='ar'?'inline-block':'none';
+
+  // Update zone label
+  document.getElementById('seqZoneLbl').textContent=
+    seqSub==='it'?'رتّب بالإيطالي 🔀':'رتّب بالعربي 🔀';
+
+  document.getElementById('lHeard').textContent='';
+  document.getElementById('lBadge').className='badge';
+  document.getElementById('lBreakdown').style.display='none';
+  document.getElementById('lConjWrap').style.display='none';
+  document.getElementById('seqRevealBtn').style.display='inline-block';
+  seqRender();
+}
+
+// Returns tile class string including ar modifier when needed
+function seqTileClass(...states){
+  return ['seq-tile',seqSub==='ar'?'ar':'',...states].filter(Boolean).join(' ');
+}
+
+function seqRender(){
+  const s=seqS();
+  const ar=seqSub==='ar';
+
+  // ── answer zone ──
+  const az=document.getElementById('seqAnswer');
+  az.innerHTML='';
+  if(seqPlaced.length===0){
+    const hint=document.createElement('span');
+    hint.className='seq-empty-hint';
+    hint.textContent=ar?'اختار الكلمات بالعربي بالترتيب الصح':'اضغط على الكلمات بالترتيب الصح';
+    az.appendChild(hint);
+    az.classList.remove('has-tiles');
+  } else {
+    seqPlaced.forEach(wi=>{
+      const w=s.words[wi];
+      const t=document.createElement('span');
+      t.className=seqTileClass('placed');
+      t.textContent=ar?seqArLabel(w):w.it;
+      t.title=ar?w.it:w.ar;
+      if(!seqChecked)t.onclick=()=>seqReturn(wi);
+      az.appendChild(t);
+    });
+    az.classList.add('has-tiles');
+  }
+
+  // ── pool ──
+  const pl=document.getElementById('seqPool');
+  pl.innerHTML='';
+  seqPoolOrder.forEach(wi=>{
+    if(seqPlaced.includes(wi))return;
+    const w=s.words[wi];
+    const t=document.createElement('span');
+    t.className=seqTileClass();
+    t.textContent=ar?seqArLabel(w):w.it;
+    t.title=ar?w.it:w.ar;
+    if(!seqChecked)t.onclick=()=>seqPick(wi);
+    pl.appendChild(t);
+  });
+}
+
+function seqPick(wi){
+  if(seqChecked)return;
+  // IT mode: play the individual word audio on selection
+  if(seqSub==='it')speakWord(seqS().words[wi].it);
+  seqPlaced.push(wi);
+  seqRender();
+  if(seqPlaced.length===seqWordCount())setTimeout(seqCheck,800);
+}
+
+function seqReturn(wi){
+  if(seqChecked)return;
+  const pos=seqPlaced.indexOf(wi);
+  if(pos>=0)seqPlaced.splice(pos,1);
+  seqRender();
+}
+
+// Arabic word order is more flexible than Italian's, so the AR side of
+// sequence-mode can accept more than one correct arrangement. A sentence
+// may optionally carry `arOrders`: an array of alternate accepted orders,
+// each itself an array of the original word indices (0..n-1) in that
+// order — e.g. arOrders:[[6,7,0,1,2,3,4,5]] means "ogni/sera first, then
+// Io/leggevo/..." is also correct, in addition to the literal default
+// (Italian-mirroring) order. The Italian side (رتّب بالإيطالي) always has
+// exactly one correct order: the sentence's actual word order, since
+// that's literally what's being practiced there.
+function seqAcceptedOrders(s){
+  const n=s.words.length;
+  const defaultOrder=Array.from({length:n},(_,i)=>i);
+  if(seqSub==='it'||!s.arOrders||!s.arOrders.length)return [defaultOrder];
+  return [defaultOrder,...s.arOrders];
+}
+
+function seqCheck(){
+  if(seqChecked)return;
+  seqChecked=true;
+  const s=seqS();
+  // Grade against whichever accepted order the learner's placement matches
+  // best, so a valid alternate Arabic ordering doesn't get marked wrong
+  // just because it differs from the default literal order.
+  const candidates=seqAcceptedOrders(s);
+  let best=candidates[0],bestMatches=-1;
+  candidates.forEach(c=>{
+    let m=0;
+    seqPlaced.forEach((wi,pos)=>{if(wi===c[pos])m++;});
+    if(m>bestMatches){bestMatches=m;best=c;}
+  });
+  let correct=0;
+  const tiles=document.getElementById('seqAnswer').querySelectorAll('.seq-tile');
+  seqPlaced.forEach((wi,pos)=>{
+    const ok=(wi===best[pos]);
+    if(ok)correct++;
+    if(tiles[pos])tiles[pos].className=seqTileClass(ok?'ok':'bad');
+  });
+  const pct=Math.round(correct/s.words.length*100);
+  lAttempts++;
+  if(pct>=80){lPassed++;lStreak++;floatEmoji('✅');}
+  else{lStreak=0;floatEmoji('🔀');}
+  lUpdateScore();
+
+  const badge=document.getElementById('lBadge');
+  badge.innerHTML=correct+'/'+s.words.length+' كلمة في مكانها الصح — <b>'+pct+'%</b>';
+  badge.className='badge '+(pct>=80?'ok':pct>=50?'mid':'bad')+' show';
+  document.getElementById('lCard').className='card '+(pct>=80?'ok':pct>=50?'mid':'bad');
+
+  document.getElementById('lBreakdown').style.display='flex';
+  if(s.conj)document.getElementById('lConjWrap').style.display='block';
+  document.getElementById('lNextBtn').className='next-btn show';
+  document.getElementById('lNextBtn').textContent=seqIsLast()?'خلصت الدفعة 🏆':'الجملة الجاية ←';
+  document.getElementById('seqRevealBtn').style.display='none';
+}
+
+function seqReveal(){
+  if(seqChecked)return;
+  seqChecked=true;
+  const s=seqS();
+  const az=document.getElementById('seqAnswer');
+  az.innerHTML='';az.classList.add('has-tiles');
+  const ar=seqSub==='ar';
+  s.words.forEach(w=>{
+    const t=document.createElement('span');
+    t.className=seqTileClass('ok');
+    t.textContent=ar?seqArLabel(w):w.it;
+    t.title=ar?w.it:w.ar;
+    az.appendChild(t);
+  });
+  document.getElementById('seqPool').innerHTML='';
+  document.getElementById('lBreakdown').style.display='flex';
+  if(s.conj)document.getElementById('lConjWrap').style.display='block';
+  document.getElementById('lNextBtn').className='next-btn show';
+  document.getElementById('lNextBtn').textContent=seqIsLast()?'خلصت الدفعة 🏆':'الجملة الجاية ←';
+  document.getElementById('seqRevealBtn').style.display='none';
+  lStreak=0;lUpdateScore();
+}
+
+// ── WRITE MODE ──
+// Show Arabic (+ audio hint via TTS button); user types the Italian sentence.
+// Token-by-token Levenshtein check gives per-word green/red feedback.
+function writeSetup(){
+  const inp=document.getElementById('writeInput');
+  inp.value='';inp.disabled=false;
+  document.getElementById('writeResult').innerHTML='';
+  document.getElementById('writeScore').textContent='';
+  document.getElementById('writeCheckBtn').disabled=false;
+  document.getElementById('lNextBtn').className='next-btn';
+  document.getElementById('lHeard').textContent='';
+  document.getElementById('lBadge').className='badge';
+  inp.onkeydown=(e)=>{
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();checkWrite();}
+  };
+  setTimeout(()=>inp.focus(),150);
+}
+
+function checkWrite(){
+  const s=lDeck[lIdx];
+  const inp=document.getElementById('writeInput');
+  const typed=inp.value.trim();
+  if(!typed)return;
+
+  inp.disabled=true;
+  document.getElementById('writeCheckBtn').disabled=true;
+
+  const typedToks=typed.split(/\s+/).filter(Boolean);
+  const resultWrap=document.getElementById('writeResult');
+  resultWrap.innerHTML='';
+  let correctCount=0, gradedCount=0;
+
+  s.words.forEach((w,i)=>{
+    const div=document.createElement('div');
+
+    // حروف الجر والمقالات — دايماً صح تلقائياً زي speak mode
+    if(isAutoSkipWord(w.it)){
+      div.className='wr-tok auto';
+      div.textContent=w.it;
+      resultWrap.appendChild(div);
+      return;
+    }
+
+    gradedCount++;
+    const target=norm(w.it);
+    const userWord=typedToks[i]||'';
+    const isOk=similarity(norm(userWord),target)>=0.72;
+    if(isOk)correctCount++;
+
+    div.className='wr-tok '+(isOk?'ok':'bad');
+    div.textContent=isOk?w.it:(userWord||'—');
+    if(!isOk){
+      const sp=document.createElement('span');
+      sp.className='correct-form';
+      sp.textContent='✓ '+w.it;
+      div.appendChild(sp);
+    }
+    resultWrap.appendChild(div);
+  });
+
+  // النسبة من الكلمات المحتوى بس (مش حروف الجر)
+  const pct=gradedCount?Math.round(correctCount/gradedCount*100):0;
+  const scoreEl=document.getElementById('writeScore');
+  scoreEl.textContent=correctCount+'/'+gradedCount+' كلمة صح — '+pct+'%';
+  scoreEl.style.color=pct>=80?'var(--green)':pct>=50?'var(--gold)':'var(--red)';
+
+  lAttempts++;
+  if(pct>=80){lPassed++;lStreak++;floatEmoji('✅');}
+  else{lStreak=0;floatEmoji('📝');}
+  lUpdateScore();
+
+  document.getElementById('lNextBtn').className='next-btn show';
+  document.getElementById('lNextBtn').textContent=
+    lIdx+1>=lDeck.length?'خلصت الدفعة 🏆':'الجملة الجاية ←';
+}
+</script>
+</body>
+</html>
