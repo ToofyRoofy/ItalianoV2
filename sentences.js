@@ -39,7 +39,7 @@ const WORDS = [
 const LESSON_SENTENCES = [
 
 // ── Io ──────────────────────────────────────────────────────────────
-{it:"La biblioteca era chiusa, quindi andavo a casa e leggevo un libro di storia mentre la TV era accesa", ar:"المكتبة كانت مقفولة، فعشان كده كنت بروح البيت وأقرا كتاب تاريخ والتليفزيون شغال.", en:"The library was closed, so I used to go home and read a history book while the TV was on.", pronoun:"Io (أنا)",
+{it:"La biblioteca era chiusa, quindi andavo a casa e leggevo un libro di storia, mentre la TV era accesa", ar:"المكتبة كانت مقفولة، فعشان كده كنت بروح البيت وأقرا كتاب تاريخ والتليفزيون شغال.", en:"The library was closed, so I used to go home and read a history book while the TV was on.", pronoun:"Io (أنا)",
  words:[
    {it:"La",     ar:"الـ",         note:"أداة تعريف مؤنث مفرد"},
    {it:"biblioteca",ar:"المكتبة",  note:null},
@@ -66,7 +66,7 @@ const LESSON_SENTENCES = [
    {person:"Noi (احنا)", form:"Andavamo"},{person:"Voi (انتم)",  form:"Andavate"},
    {person:"Loro (هم)",  form:"Andavano"}]}},
 
-{it:"Io prendevo il caffè alla mattina appena andavo al bar del centro", ar:"كنت باخد القهوة الصبح أول ما كنت بروح البار بتاع وسط البلد.", en:"I used to have coffee in the morning as soon as I went to the bar in the center.", pronoun:"Io (أنا)",
+{it:"Io prendevo il caffè alla mattina, appena andavo al bar del centro", ar:"كنت باخد القهوة الصبح أول ما كنت بروح البار بتاع وسط البلد.", en:"I used to have coffee in the morning as soon as I went to the bar in the center.", pronoun:"Io (أنا)",
  words:[
    {it:"Io",      ar:"أنا",         note:null},
    {it:"prendevo",ar:"كنت باخد",    note:"من Prendere، Imperfetto مع Io"},
@@ -82,7 +82,7 @@ const LESSON_SENTENCES = [
    {it:"centro",  ar:"وسط البلد",   note:null}
  ], conj:null, arOrders:[[4,5,0,1,2,3,6,7,8,9,10,11]]},
 
-{it:"Io ero stanco quando tornavo a casa tardi perché andavo a piedi dall'ufficio e la strada era lunga", ar:"كنت تعبان لما كنت برجع البيت متأخر لأني كنت بروح مشي من المكتب والسكة كانت طويلة.", en:"I was tired when I came home late because I walked from the office and the road was long.", pronoun:"Io (أنا)",
+{it:"Io ero stanco quando tornavo a casa tardi, perché andavo a piedi dall'ufficio, e la strada era lunga", ar:"كنت تعبان لما كنت برجع البيت متأخر لأني كنت بروح مشي من المكتب والسكة كانت طويلة.", en:"I was tired when I came home late because I walked from the office and the road was long.", pronoun:"Io (أنا)",
  words:[
    {it:"Io",       ar:"أنا",         note:null},
    {it:"ero",      ar:"كنت",         note:"من Essere (فعل شاذ)، Imperfetto مع Io"},
@@ -110,7 +110,7 @@ const LESSON_SENTENCES = [
    {person:"Loro (هم)",  form:"Erano"}]}},
 
 // ── Tu ──────────────────────────────────────────────────────────────
-{it:"Tu andavi a letto tardi perché leggevi un libro di lingue la sera sul divano in pelle con la luce accesa", ar:"أنت كنت بتروح السرير متأخر لأنك كنت بتقرا كتاب لغات بالليل على الكنبة الجلد والنور شغال.", en:"You used to go to bed late because you read a language book in the evening on the leather sofa with the light on.", pronoun:"Tu (أنت)",
+{it:"Tu andavi a letto tardi, perché leggevi un libro di lingue la sera sul divano in pelle con la luce accesa", ar:"أنت كنت بتروح السرير متأخر لأنك كنت بتقرا كتاب لغات بالليل على الكنبة الجلد والنور شغال.", en:"You used to go to bed late because you read a language book in the evening on the leather sofa with the light on.", pronoun:"Tu (أنت)",
  words:[
    {it:"Tu",       ar:"أنت",         note:"ضمير المخاطب المفرد"},
    {it:"andavi",   ar:"كنت بتروح",   note:"من Andare (فعل شاذ)، Imperfetto مع Tu"},
@@ -135,7 +135,7 @@ const LESSON_SENTENCES = [
    {it:"accesa",   ar:"شغال",        note:"صفة مؤنث مفرد (من Accendere)"}
  ], conj:null},
 
-{it:"Tu capivi sempre tutto a lezione quando andavi a sederti nella prima fila non appena la porta si apriva", ar:"أنت كنت دايماً بتفهم كل حاجة في الحصة لما كنت بتروح تقعد في الصف الأول أول ما الباب بيتفتح.", en:"You always understood everything in class when you went to sit in the front row as soon as the door opened.", pronoun:"Tu (أنت)",
+{it:"Tu capivi sempre tutto a lezione, quando andavi a sederti nella prima fila, non appena la porta si apriva", ar:"أنت كنت دايماً بتفهم كل حاجة في الحصة لما كنت بتروح تقعد في الصف الأول أول ما الباب بيتفتح.", en:"You always understood everything in class when you went to sit in the front row as soon as the door opened.", pronoun:"Tu (أنت)",
  words:[
    {it:"Tu",       ar:"أنت",         note:null},
    {it:"capivi",   ar:"كنت بتفهم",   note:"من Capire، Imperfetto مع Tu"},
@@ -158,7 +158,7 @@ const LESSON_SENTENCES = [
    {it:"apriva",   ar:"بيتفتح",      note:"من Aprirsi، Imperfetto — الغائب المفرد"}
  ], conj:null},
 
-{it:"Tu tornavi dalla lezione stanco perché andavi subito all'allenamento, ma a volte la palestra era chiusa", ar:"أنت كنت بترجع من الحصة تعبان لأنك كنت بتروح فوراً للتمرين، بس أحياناً الجيم كان مقفول.", en:"You came back from class tired because you went straight to training, but sometimes the gym was closed.", pronoun:"Tu (أنت)",
+{it:"Tu tornavi dalla lezione stanco, perché andavi subito all'allenamento, ma a volte la palestra era chiusa", ar:"أنت كنت بترجع من الحصة تعبان لأنك كنت بتروح فوراً للتمرين، بس أحياناً الجيم كان مقفول.", en:"You came back from class tired because you went straight to training, but sometimes the gym was closed.", pronoun:"Tu (أنت)",
  words:[
    {it:"Tu",          ar:"أنت",        note:null},
    {it:"tornavi",     ar:"كنت بترجع",  note:"من Tornare، Imperfetto مع Tu"},
@@ -180,7 +180,7 @@ const LESSON_SENTENCES = [
  ], conj:null},
 
 // ── Lui ─────────────────────────────────────────────────────────────
-{it:"Lui lavorava di notte e era sempre stanco quando andava in fabbrica mentre tutti dormivano", ar:"هو كان بيشتغل بالليل وكان دايماً تعبان لما كان بيروح المصنع وكل الناس نايمين.", en:"He used to work at night and was always tired when he went to the factory while everyone slept.", pronoun:"Lui (هو)",
+{it:"Lui lavorava di notte, e era sempre stanco quando andava in fabbrica, mentre tutti dormivano", ar:"هو كان بيشتغل بالليل وكان دايماً تعبان لما كان بيروح المصنع وكل الناس نايمين.", en:"He used to work at night and was always tired when he went to the factory while everyone slept.", pronoun:"Lui (هو)",
  words:[
    {it:"Lui",       ar:"هو",           note:"ضمير الغائب المفرد المذكر"},
    {it:"lavorava",  ar:"كان بيشتغل",   note:"من Lavorare، Imperfetto مع Lui"},
@@ -199,7 +199,7 @@ const LESSON_SENTENCES = [
    {it:"dormivano", ar:"كانوا نايمين", note:"من Dormire، Imperfetto مع Loro"}
  ], conj:null},
 
-{it:"Lui prendeva un caffè ogni mattina e andava all'università di Milano appena si svegliava", ar:"هو كان بياخد قهوة كل صبح وكان بيروح جامعة ميلانو أول ما يصحى.", en:"He used to have a coffee every morning and go to the university of Milan as soon as he woke up.", pronoun:"Lui (هو)",
+{it:"Lui prendeva un caffè ogni mattina e andava all'università di Milano, appena si svegliava", ar:"هو كان بياخد قهوة كل صبح وكان بيروح جامعة ميلانو أول ما يصحى.", en:"He used to have a coffee every morning and go to the university of Milan as soon as he woke up.", pronoun:"Lui (هو)",
  words:[
    {it:"Lui",        ar:"هو",          note:null},
    {it:"prendeva",   ar:"كان بياخد",   note:"من Pretendere، Imperfetto مع Lui"},
@@ -218,7 +218,7 @@ const LESSON_SENTENCES = [
    {it:"svegliava",  ar:"كان بيصحى",  note:"من Svegliarsi، Imperfetto مع Lui"}
  ], conj:null, arOrders:[[4,5,0,1,2,3,6,7,8,9,10,11,12,13,14]]},
 
-{it:"Il condizionatore dell'ufficio non funzionava bene e lui era stanco del caldo, quindi andava a bere l'acqua fredda", ar:"مكيف المكتب ماكنش شغال كويس وهو كان تعبان من الحر، فعشان كده كان بيروح يشرب المية الساقعة.", en:"The office AC wasn't working well and he was tired of the heat, so he used to go drink cold water.", pronoun:"Lui (هو)",
+{it:"Il condizionatore dell'ufficio non funzionava bene, e lui era stanco del caldo, quindi andava a bere l'acqua fredda", ar:"مكيف المكتب ماكنش شغال كويس وهو كان تعبان من الحر، فعشان كده كان بيروح يشرب المية الساقعة.", en:"The office AC wasn't working well and he was tired of the heat, so he used to go drink cold water.", pronoun:"Lui (هو)",
  words:[
    {it:"Il",             ar:"الـ",         note:"أداة تعريف مذكر مفرد"},
    {it:"condizionatore", ar:"المكيف",      note:null},
@@ -243,7 +243,7 @@ const LESSON_SENTENCES = [
  ], conj:null},
 
 // ── Lei ─────────────────────────────────────────────────────────────
-{it:"Lei tornava a casa dalla lezione la sera e andava a dormire subito sull'autobus mentre ascoltava la musica", ar:"هي كانت بترجع البيت من الحصة بالليل وكانت بتروح تنام فوراً على الأتوبيس وهي بتسمع الموسيقى.", en:"She used to come home from class in the evening and fall asleep straight away on the bus while listening to music.", pronoun:"Lei (هي)",
+{it:"Lei tornava a casa dalla lezione la sera e andava a dormire subito sull'autobus, mentre ascoltava la musica", ar:"هي كانت بترجع البيت من الحصة بالليل وكانت بتروح تنام فوراً على الأتوبيس وهي بتسمع الموسيقى.", en:"She used to come home from class in the evening and fall asleep straight away on the bus while listening to music.", pronoun:"Lei (هي)",
  words:[
    {it:"Lei",       ar:"هي",           note:"ضمير الغائب المفرد المؤنث"},
    {it:"tornava",   ar:"كانت بترجع",   note:"من Tornare، Imperfetto مع Lei"},
@@ -266,7 +266,7 @@ const LESSON_SENTENCES = [
    {it:"musica",    ar:"الموسيقى",     note:null}
  ], conj:null},
 
-{it:"Lei capiva tutto a lezione ma era stanca la sera quando andava al supermercato perché la fila era sempre lunga", ar:"هي كانت بتفهم كل حاجة في الحصة بس كانت تعبانة بالليل لما كانت بتروح السوبرماركت لأن الطابور كان دايماً طويل.", en:"She understood everything in class but was tired in the evening when she went to the supermarket because the queue was always long.", pronoun:"Lei (هي)",
+{it:"Lei capiva tutto a lezione, ma era stanca la sera, quando andava al supermercato, perché la fila era sempre lunga", ar:"هي كانت بتفهم كل حاجة في الحصة بس كانت تعبانة بالليل لما كانت بتروح السوبرماركت لأن الطابور كان دايماً طويل.", en:"She understood everything in class but was tired in the evening when she went to the supermarket because the queue was always long.", pronoun:"Lei (هي)",
  words:[
    {it:"Lei",          ar:"هي",         note:null},
    {it:"capiva",       ar:"كانت بتفهم", note:"من Capire، Imperfetto مع Lei"},
@@ -290,7 +290,7 @@ const LESSON_SENTENCES = [
    {it:"lunga",        ar:"طويل",       note:"صفة مؤنث مفرد"}
  ], conj:null},
 
-{it:"Lei prendeva un caffè e un panino piccolo ogni mattina perché andava di fretta alla stazione dei treni", ar:"هي كانت بتاخد قهوة وسندوتش صغير كل صبح لأنها كانت بتروح مستعجلة لمحطة القطارات.", en:"She used to have a coffee and a small sandwich every morning because she rushed to the train station.", pronoun:"Lei (هي)",
+{it:"Lei prendeva un caffè e un panino piccolo ogni mattina, perché andava di fretta alla stazione dei treni", ar:"هي كانت بتاخد قهوة وسندوتش صغير كل صبح لأنها كانت بتروح مستعجلة لمحطة القطارات.", en:"She used to have a coffee and a small sandwich every morning because she rushed to the train station.", pronoun:"Lei (هي)",
  words:[
    {it:"Lei",      ar:"هي",          note:null},
    {it:"prendeva", ar:"كانت بتاخد",  note:"من Prendere، Imperfetto مع Lei"},
@@ -313,7 +313,7 @@ const LESSON_SENTENCES = [
  ], conj:null, arOrders:[[8,9,0,1,2,3,4,5,6,7,10,11,12,13,14,15,16,17]]},
 
 // ── Noi ─────────────────────────────────────────────────────────────
-{it:"Noi leggevamo un libro di religione la sera quando eravamo stanchi e andavamo al cinema mentre fuori pioveva", ar:"احنا كنا بنقرا كتاب دين بالليل لما كنا تعبانين وكنا بنروح السينما بينما كانت بتمطر بره.", en:"We used to read a religion book in the evening when we were tired and go to the cinema while it rained outside.", pronoun:"Noi (احنا)",
+{it:"Noi leggevamo un libro di religione la sera, quando eravamo stanchi, e andavamo al cinema, mentre fuori pioveva", ar:"احنا كنا بنقرا كتاب دين بالليل لما كنا تعبانين وكنا بنروح السينما بينما كانت بتمطر بره.", en:"We used to read a religion book in the evening when we were tired and go to the cinema while it rained outside.", pronoun:"Noi (احنا)",
  words:[
    {it:"Noi",        ar:"احنا",         note:"ضمير المتكلم الجمع"},
    {it:"leggevamo",  ar:"كنا بنقرا",    note:"من Leggere، Imperfetto مع Noi"},
@@ -335,7 +335,7 @@ const LESSON_SENTENCES = [
    {it:"pioveva",    ar:"كانت بتمطر",   note:"من Piovere، Imperfetto"}
  ], conj:null},
 
-{it:"Noi tornavamo dalla lezione e andavamo a prendere un caffè al bar della piazza quando il tempo era bello", ar:"احنا كنا بنرجع من الحصة وكنا بنروح ناخد قهوة في البار بتاع الميدان لما الجو بيكون حلو.", en:"We used to come back from class and go to get a coffee at the square's bar when the weather was nice.", pronoun:"Noi (احنا)",
+{it:"Noi tornavamo dalla lezione e andavamo a prendere un caffè al bar della piazza, quando il tempo era bello", ar:"احنا كنا بنرجع من الحصة وكنا بنروح ناخد قهوة في البار بتاع الميدان لما الجو بيكون حلو.", en:"We used to come back from class and go to get a coffee at the square's bar when the weather was nice.", pronoun:"Noi (احنا)",
  words:[
    {it:"Noi",        ar:"احنا",        note:null},
    {it:"tornavamo",  ar:"كنا بنرجع",   note:"من Tornare، Imperfetto مع Noi"},
@@ -358,7 +358,7 @@ const LESSON_SENTENCES = [
    {it:"bello",      ar:"حلو",         note:"صفة مذكر مفرد"}
  ], conj:null},
 
-{it:"Noi capivamo tutto a lezione ma di notte eravamo stanchi perché andavamo a correre nello stadio", ar:"احنا كنا بنفهم كل حاجة في الحصة بس بالليل كنا تعبانين لأننا كنا بنروح نجري في الاستاد.", en:"We understood everything in class but at night we were tired because we used to go running in the stadium.", pronoun:"Noi (احنا)",
+{it:"Noi capivamo tutto a lezione, ma di notte eravamo stanchi, perché andavamo a correre nello stadio", ar:"احنا كنا بنفهم كل حاجة في الحصة بس بالليل كنا تعبانين لأننا كنا بنروح نجري في الاستاد.", en:"We understood everything in class but at night we were tired because we used to go running in the stadium.", pronoun:"Noi (احنا)",
  words:[
    {it:"Noi",       ar:"احنا",        note:null},
    {it:"capivamo",  ar:"كنا بنفهم",   note:"من Capire، Imperfetto مع Noi"},
@@ -411,7 +411,7 @@ const LESSON_SENTENCES = [
    {it:"mattina",ar:"الصباح",note:null}
  ], conj:null},
 
-{it:"Voi eravate stanchi quando il condizionatore non funzionava", ar:"كنتوا تعبانين لما المكيف ماكنش شغال.", en:"You (pl) were tired when the AC wasn't working.", pronoun:"Voi (انتم)",
+{it:"Voi eravate stanchi, quando il condizionatore non funzionava", ar:"كنتوا تعبانين لما المكيف ماكنش شغال.", en:"You (pl) were tired when the AC wasn't working.", pronoun:"Voi (انتم)",
  words:[
    {it:"Voi",ar:"انتم",note:null},
    {it:"eravate",ar:"كنتوا",note:"من Essere (فعل شاذ)، Imperfetto مع Voi"},
@@ -443,7 +443,7 @@ const LESSON_SENTENCES = [
    {it:"piccoli",ar:"وهم صغيرين",note:"صفة جمع تعبر عن مرحلة الصغر زمنيًا"}
  ], conj:null},
 
-{it:"Loro tornavano a casa tardi la sera sempre stanchi", ar:"هم كانوا بيرجعوا البيت متأخرين بالليل، دايماً تعبانين.", en:"They used to come home late in the evening, always tired.", pronoun:"Loro (هم)",
+{it:"Loro tornavano a casa tardi la sera, sempre stanchi", ar:"هم كانوا بيرجعوا البيت متأخرين بالليل، دايماً تعبانين.", en:"They used to come home late in the evening, always tired.", pronoun:"Loro (هم)",
  words:[
    {it:"Loro",ar:"هم",note:null},
    {it:"tornavano",ar:"كانوا بيرجعوا",note:"من Tornare، Imperfetto مع Loro"},
@@ -564,7 +564,7 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── صحة / صيدلية ────────────────────────────────────────────────────
-{it:"Non mi sento bene ho mal di testa da ieri sera", ar:"مش بحس بخير عندي صداع من امبارح بالليل", en:"I don't feel well, I've had a headache since last night.",
+{it:"Non mi sento bene, ho mal di testa da ieri sera", ar:"مش بحس بخير عندي صداع من امبارح بالليل", en:"I don't feel well, I've had a headache since last night.",
  words:[
   {it:"Non",ar:"مش"},{it:"mi",ar:"أنا"},{it:"sento",ar:"بحس"},
   {it:"bene",ar:"بخير"},{it:"ho",ar:"عندي"},{it:"mal",ar:"ألم"},
@@ -644,7 +644,7 @@ const AR_SEQ_SENTENCES = [
 ]},
 
 // ── طقس ─────────────────────────────────────────────────────────────
-{it:"Oggi fa molto caldo ma domani arriva un po' di pioggia", ar:"النهارده حر جداً بس بكره هتيجي شوية مطر", en:"Today it's very hot but tomorrow some rain is coming.",
+{it:"Oggi fa molto caldo, ma domani arriva un po' di pioggia", ar:"النهارده حر جداً بس بكره هتيجي شوية مطر", en:"Today it's very hot but tomorrow some rain is coming.",
  words:[
   {it:"Oggi",ar:"النهارده"},{it:"fa",ar:"في"},{it:"molto",ar:"جداً"},
   {it:"caldo",ar:"حر"},{it:"ma",ar:"بس"},{it:"domani",ar:"بكره"},
@@ -652,7 +652,7 @@ const AR_SEQ_SENTENCES = [
   {it:"di",ar:"من"},{it:"pioggia",ar:"مطر"}
 ]},
 
-{it:"Portati un ombrello perché sembra che piova oggi pomeriggio", ar:"خد معاك شمسية لأنه يبان إنه هيمطر بعد الضهر", en:"Take an umbrella because it looks like it will rain this afternoon.",
+{it:"Portati un ombrello, perché sembra che piova oggi pomeriggio", ar:"خد معاك شمسية لأنه يبان إنه هيمطر بعد الضهر", en:"Take an umbrella because it looks like it will rain this afternoon.",
  words:[
   {it:"Portati",ar:"خد معاك"},{it:"un",ar:"(تنكير)"},{it:"ombrello",ar:"شمسية"},
   {it:"perché",ar:"لأن"},{it:"sembra",ar:"يبان"},{it:"che",ar:"إنه"},
@@ -668,7 +668,7 @@ const AR_SEQ_SENTENCES = [
   {it:"importante",ar:"المهم"}
 ]},
 
-{it:"Ho ricevuto un messaggio da Marco ma non ho ancora risposto", ar:"استلمت رسالة من ماركو بس ما رديتش لسه", en:"I received a message from Marco but haven't replied yet.",
+{it:"Ho ricevuto un messaggio da Marco, ma non ho ancora risposto", ar:"استلمت رسالة من ماركو بس ما رديتش لسه", en:"I received a message from Marco but haven't replied yet.",
  words:[
   {it:"Ho",ar:"أنا"},{it:"ricevuto",ar:"استلمت"},{it:"un",ar:"(تنكير)"},
   {it:"messaggio",ar:"رسالة"},{it:"da",ar:"من"},{it:"Marco",ar:"ماركو"},
@@ -684,7 +684,7 @@ const AR_SEQ_SENTENCES = [
   {it:"con",ar:"مع"},{it:"gli",ar:"الـ"},{it:"amici",ar:"الأصحاب"}
 ]},
 
-{it:"Mi piace molto ascoltare la musica mentre cucino la sera", ar:"بحب أوي أسمع موسيقى وأنا بطبخ بالليل", en:"I really like listening to music while I cook in the evening.",
+{it:"Mi piace molto ascoltare la musica, mentre cucino la sera", ar:"بحب أوي أسمع موسيقى وأنا بطبخ بالليل", en:"I really like listening to music while I cook in the evening.",
  words:[
   {it:"Mi",ar:"أنا"},{it:"piace",ar:"بحب"},{it:"molto",ar:"أوي"},
   {it:"ascoltare",ar:"أسمع"},{it:"la",ar:"الـ"},{it:"musica",ar:"موسيقى"},
